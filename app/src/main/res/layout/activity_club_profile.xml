@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center_horizontal">
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+        <ImageButton android:layout_width="50dp" android:layout_height="50dp"
+                     android:id="@+id/back_button"
+                     android:src="@drawable/back_button"
+                     android:contentDescription="@string/back_button"
+                     android:layout_alignParentStart="true"
+                     android:layout_margin="16dp"
+                     android:scaleType="centerCrop"
+                     android:padding="0dp"/>
+
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/modify_button"
+                android:hint="@string/modify"
+                android:backgroundTint="@color/white"
+                android:textColorHint="#757575"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"
+                android:layout_margin="16dp"/>
+
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="2dp"
+          android:background="@color/black"/>
+
+    <ImageView android:layout_width="192dp" android:layout_height="173dp"
+               android:id="@+id/profile_picture"
+               android:contentDescription="@string/profile_picture"
+               android:src="@drawable/pp"
+               android:padding="0dp"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:id="@+id/club_name"
+              android:hint="@string/club_name"
+              android:textColorHint="@color/black"
+              android:textSize="34sp"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:id="@+id/user_email_address"
+              android:hint="@string/email_address_et_esiea_fr"
+              android:textColorHint="@color/black"
+              android:textSize="20sp"
+              android:paddingBottom="16dp"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/black"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/user_description"
+              android:hint="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
+              android:textColorHint="@color/black"
+              android:padding="30dp" android:textAlignment="textStart"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/black"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:hint="Events:"
+              android:padding="16dp"
+              android:textColorHint="@color/black"
+              android:textSize="20dp"/>
+
+
+</LinearLayout>
