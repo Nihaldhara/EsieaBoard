@@ -22,8 +22,8 @@
                 android:hint="@string/modify"
                 android:backgroundTint="@color/white"
                 android:textColorHint="#757575"
+                android:textSize="20sp"
                 android:layout_alignParentEnd="true"
-                android:visibility="invisible"
                 android:layout_margin="16dp"/>
 
     </RelativeLayout>
@@ -32,41 +32,59 @@
           android:background="@color/black"/>
 
     <ImageView android:layout_width="192dp" android:layout_height="173dp"
-               android:id="@+id/profile_picture"
-               android:contentDescription="@string/profile_picture"
-               android:src="@drawable/pp"
+               android:id="@+id/logo_image"
+               android:src="@drawable/club_picture"
                android:padding="0dp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_name"
               android:hint="@string/club_name"
               android:textColorHint="@color/black"
+              android:textAlignment="center"
               android:textSize="34sp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:id="@+id/user_email_address"
+              android:id="@+id/club_email_address"
               android:hint="@string/email_address_et_esiea_fr"
               android:textColorHint="@color/black"
               android:textSize="20sp"
+              android:textAlignment="center"
               android:paddingBottom="16dp"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/user_description"
+              android:id="@+id/club_description"
               android:hint="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
               android:textColorHint="@color/black"
-              android:padding="30dp" android:textAlignment="textStart"/>
+              android:padding="30dp" 
+              android:textAlignment="textStart"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
 
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:hint="Events:"
-              android:padding="16dp"
-              android:textColorHint="@color/black"
-              android:textSize="20dp"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:hint="@string/events"
+                  android:padding="16dp"
+                  android:textColorHint="@color/black"
+                  android:textSize="20sp"/>
+
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/button_new"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:text="@string/new_event"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view"/>
 
 
 </LinearLayout>

@@ -1,28 +1,28 @@
-package com.example.esieaboard;
+package com.example.esieaboard.models;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SubscriptionModel {
+public class AdministratorModel {
     private int id;
     private int userId;
     private int clubId;
-    private int nature;
+    private int rights;
 
-    public SubscriptionModel(int id, int userId, int clubId, int nature) {
+    public AdministratorModel(int id, int userId, int clubId, int rights) {
         this.id = id;
         this.userId = userId;
         this.clubId = clubId;
-        this.nature = nature;
+        this.rights = rights;
     }
 
     @NotNull
     @Override
     public String toString() {
-        return "SubscriptionModel{" +
+        return "AdministratorModel{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", clubId=" + clubId +
-                ", nature=" + nature +
+                ", rights=" + rights +
                 '}';
     }
 
@@ -50,11 +50,11 @@ public class SubscriptionModel {
         this.clubId = clubId;
     }
 
-    public int getNature() {
-        return nature;
+    public int getRights() {
+        return rights;
     }
 
-    public void setNature(int nature) {
-        this.nature = nature;
+    public void setRights(int rights) {
+        this.rights = rights;
     }
 }

@@ -2,10 +2,11 @@ package com.example.esieaboard;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.media.metrics.Event;
 import androidx.annotation.Nullable;
+import com.example.esieaboard.models.*;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -30,20 +31,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NATURE = "NATURE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "database.db", null, 1);
+        super(context, "esieaboard.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createUserTable = "CREATE TABLE " + USER_TABLE +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                COLUMN_FIRST_NAME + " VARCHAR(128) NOT NULL," +
-                COLUMN_LAST_NAME + " VARCHAR(128) NOT NULL," +
+                COLUMN_FIRST_NAME + " VARCHAR(128)," +
+                COLUMN_LAST_NAME + " VARCHAR(128)," +
                 COLUMN_EMAIL_ADDRESS + " VARCHAR(128) NOT NULL," +
                 COLUMN_PASSWORD_HASH + " VARCHAR(128) NOT NULL);\n";
 
         String createClubTable = "CREATE TABLE " + CLUB_TABLE +
-                " ("+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 COLUMN_NAME + " VARCHAR(128) NOT NULL, " +
                 COLUMN_DESCRIPTION + " TEXT NOT NULL);\n";
 
@@ -89,7 +90,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CLUB_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EVENT_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ADMINISTRATOR_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SUBSCRIPTION_TABLE);
 
+        onCreate(sqLiteDatabase);
     }
 
     public boolean addUser(UserModel userModel) {
@@ -158,5 +165,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long insert = sqLiteDatabase.insert(SUBSCRIPTION_TABLE, null, cv);
 
         return insert != -1;
+    }
+
+    Cursor readClubData() {
+        String query = "SELECT * FROM " + CLUB_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    Cursor readEventData() {
+        String query = "SELECT * FROM " + EVENT_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
     }
 }

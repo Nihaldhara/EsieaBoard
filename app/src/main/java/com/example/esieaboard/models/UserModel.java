@@ -1,4 +1,4 @@
-package com.example.esieaboard;
+package com.example.esieaboard.models;
 
 import org.jetbrains.annotations.NotNull;
 

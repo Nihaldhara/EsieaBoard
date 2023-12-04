@@ -6,7 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
         tools:context=".MainActivity">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -14,14 +13,18 @@
                   android:gravity="center_vertical">
 
         <ImageButton android:layout_width="100dp" android:layout_height="100dp"
+                     android:id="@+id/user_profile_button"
                      android:contentDescription="@string/profile_picture"
                      android:src="@drawable/pp"
                      android:scaleType="centerCrop"
                      android:padding="0dp"/>
 
+        <View android:layout_width="1dp" android:layout_height="match_parent"
+              android:background="@color/black"/>
+
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/text_event_board"
-                  android:hint="@string/event_board"
+                  android:text="@string/event_board"
                   android:textSize="48sp"
                   android:textStyle="bold"
                   android:layout_marginTop="16dp"
@@ -31,12 +34,39 @@
 
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="wrap_content" android:layout_height="match_parent"
-            android:layout_gravity="start">
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/black"/>
 
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:hint="C"/>
+    <LinearLayout
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <LinearLayout android:layout_width="100dp" android:layout_height="match_parent"
+                      android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/club_profiles"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:id="@+id/new_club_button"
+                    android:textSize="14sp"
+                    android:text="New"
+                    android:padding="0dp"
+                    android:layout_margin="16dp"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="1dp" android:layout_height="match_parent"
+              android:background="@color/black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/events_list"/>
 
     </LinearLayout>
 
