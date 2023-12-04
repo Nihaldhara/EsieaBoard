@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+003] - 2023-12-04
+
+### Added
+ - New necessary activity files for editing and adding clubs/events/users, and their corresponding layout files
+ - A Custom adapter java file to display lists of models in the RecyclerViews
+
+### Changed
+ - Most activities are now completely interactive in-app
+
 ## [1.0.0-dev+002] - 2023-11-30
 
 ### Added
