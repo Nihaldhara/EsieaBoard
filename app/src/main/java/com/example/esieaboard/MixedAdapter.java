@@ -119,8 +119,6 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public EventViewHolder(View itemView) {
             super(itemView);
-            // Initialize your UI elements
-            // eventName = itemView.findViewById(R.id.eventName);
             clubImage = itemView.findViewById(R.id.club_image);
             eventName = itemView.findViewById(R.id.event_name);
             eventDate = itemView.findViewById(R.id.event_date);

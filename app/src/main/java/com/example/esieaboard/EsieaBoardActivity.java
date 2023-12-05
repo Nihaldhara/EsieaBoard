@@ -14,7 +14,7 @@ import com.example.esieaboard.models.EventModel;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class EsieaBoardActivity extends AppCompatActivity {
 
     ImageButton userImageButton;
     Button newClubButton;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         userImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                Intent intent = new Intent(EsieaBoardActivity.this, UserProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
         newClubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ManageClubsAdminActivity.class);
+                Intent intent = new Intent(EsieaBoardActivity.this, ManageClubsAdminActivity.class);
                 startActivity(intent);
             }
         });
 
-        dataBaseHelper = new DataBaseHelper(MainActivity.this);
+        dataBaseHelper = new DataBaseHelper(EsieaBoardActivity.this);
 
         clubs = new ArrayList<>();
         events = new ArrayList<>();
@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
         displayClubs();
         displayEvents();
 
-        clubsAdapter = new MixedAdapter(MainActivity.this, new ArrayList<>(), clubs);
+        clubsAdapter = new MixedAdapter(EsieaBoardActivity.this, new ArrayList<>(), clubs);
         clubsRecyclerView.setAdapter(clubsAdapter);
-        clubsRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        clubsRecyclerView.setLayoutManager(new LinearLayoutManager(EsieaBoardActivity.this));
 
-        eventsAdapter = new MixedAdapter(MainActivity.this, events, new ArrayList<>());
+        eventsAdapter = new MixedAdapter(EsieaBoardActivity.this, events, new ArrayList<>());
         eventsRecyclerView.setAdapter(eventsAdapter);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(EsieaBoardActivity.this));
     }
 
     void displayClubs() {

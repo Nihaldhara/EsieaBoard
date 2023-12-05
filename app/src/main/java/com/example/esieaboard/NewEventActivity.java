@@ -3,12 +3,11 @@ package com.example.esieaboard;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.esieaboard.models.EventModel;
 
-public class NewModifyEventActivity extends AppCompatActivity {
+public class NewEventActivity extends AppCompatActivity {
 
     EditText inputName, inputDate, inputLocation, inputCapacity, inputDescription;
     Button buttonConfirm, buttonCancel;
@@ -17,7 +16,7 @@ public class NewModifyEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_modify_event);
+        setContentView(R.layout.activity_new_event);
 
         inputName = findViewById(R.id.name_input);
         inputDate = findViewById(R.id.date_input);
@@ -39,7 +38,7 @@ public class NewModifyEventActivity extends AppCompatActivity {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(NewModifyEventActivity.this);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(NewEventActivity.this);
                 EventModel eventModel = new EventModel(-1, club_id, inputName.getText().toString(),
                         inputDescription.getText().toString(), inputDate.getText().toString(),
                         inputLocation.getText().toString(), Integer.parseInt(inputCapacity.getText().toString()));

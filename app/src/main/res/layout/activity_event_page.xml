@@ -20,6 +20,7 @@
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/edit_button"
                 android:hint="Edit"
+                android:textSize="26sp"
                 android:backgroundTint="@color/white"
                 android:textColorHint="#757575"
                 android:layout_alignParentEnd="true"
@@ -57,8 +58,18 @@
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/event_description"
               android:hint="Detailed description of the event, little teaser to again draw people in"
+              android:textSize="20sp"
               android:textColorHint="@color/black"
               android:padding="30dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:hint="Capacity"
+            android:layout_margin="10dp"
+            android:layout_gravity="end"
+            android:id="@+id/event_capacity"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>

@@ -10,6 +10,8 @@ public class EditClubActivity extends AppCompatActivity {
 
     Button cancelButton, confirmButton;
     EditText nameInput, emailInput, descriptionInput;
+    int id;
+    String name, email, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,8 @@ public class EditClubActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.email_address_input);
         descriptionInput = findViewById(R.id.description_input);
 
+        getSetIntentData();
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,8 +37,24 @@ public class EditClubActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataBaseHelper dataBase = new DataBaseHelper(EditClubActivity.this);
+                name = nameInput.getText().toString().trim();
+                description = descriptionInput.getText().toString().trim();
+                dataBase.updateClub(String.valueOf(id), name, description);
                 finish();
             }
         });
+    }
+
+    void getSetIntentData() {
+        if(getIntent().hasExtra("id") && getIntent().hasExtra("name")
+                && getIntent().hasExtra("description")) {
+            id = getIntent().getIntExtra("id", -1);
+            name = getIntent().getStringExtra("name");
+            description = getIntent().getStringExtra("description");
+
+            nameInput.setText(name);
+            descriptionInput.setText(description);
+        }
     }
 }

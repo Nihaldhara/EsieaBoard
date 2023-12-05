@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.example.esieaboard.models.*;
+
+import java.util.ConcurrentModificationException;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -187,5 +190,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             cursor = sqLiteDatabase.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    void updateClub(String row_id, String name, String description) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, name);
+        cv.put(COLUMN_DESCRIPTION, description);
+
+        sqLiteDatabase.update(CLUB_TABLE, cv, " id=?", new String[] {row_id});
+    }
+
+    void updateUser(String row_id, String name, String email, String description) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, name);
+        cv.put(COLUMN_EMAIL_ADDRESS, email);
+        cv.put(COLUMN_DESCRIPTION, description);
+
+        sqLiteDatabase.update(USER_TABLE, cv, " id=?", new String[] {row_id});
+    }
+
+    void updateEvent(String row_id, String name, String date, String location, String description, int capacity) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, name);
+        cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_LOCATION, location);
+        cv.put(COLUMN_DESCRIPTION, description);
+        cv.put(COLUMN_CAPACITY, String.valueOf(capacity));
+
+        sqLiteDatabase.update(EVENT_TABLE, cv, " id=?", new String[] {row_id});
     }
 }

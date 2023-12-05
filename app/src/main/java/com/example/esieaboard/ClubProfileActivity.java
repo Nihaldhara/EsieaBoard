@@ -16,7 +16,7 @@ public class ClubProfileActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     int id;
-    String name, description;
+    String name, email, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ClubProfileActivity extends AppCompatActivity {
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ClubProfileActivity.this, NewModifyEventActivity.class);
+                Intent intent = new Intent(ClubProfileActivity.this, NewEventActivity.class);
                 intent.putExtra("club_id", id);
                 startActivity(intent);
             }
@@ -54,6 +54,9 @@ public class ClubProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ClubProfileActivity.this, EditClubActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
+                intent.putExtra("description", description);
                 startActivity(intent);
             }
         });
