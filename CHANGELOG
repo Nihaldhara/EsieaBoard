@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+004] - 2023-12-05
+
+### Changed
+ - "CustomAdapter" java file was renamed "MixedAdapter", and is now fully working, displaying a list of clubs and a list of events on two different RecycleView elements in the main page
+ - It is now possible to access the details of an event by clicking on it in the main page
+
 ## [1.0.0-dev+003] - 2023-12-04
 
 ### Added
