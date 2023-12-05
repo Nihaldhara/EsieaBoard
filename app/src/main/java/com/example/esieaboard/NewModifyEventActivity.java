@@ -3,6 +3,7 @@ package com.example.esieaboard;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.esieaboard.models.EventModel;
@@ -28,7 +29,6 @@ public class NewModifyEventActivity extends AppCompatActivity {
         buttonConfirm = findViewById(R.id.button_confirm);
 
         getSetIntentData();
-
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,8 +50,8 @@ public class NewModifyEventActivity extends AppCompatActivity {
     }
 
     void getSetIntentData() {
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("name") && getIntent().hasExtra("description")) {
-            club_id = getIntent().getIntExtra("id", -1);
+        if(getIntent().hasExtra("club_id")) {
+            club_id = getIntent().getIntExtra("club_id", -1);
         }
     }
 }

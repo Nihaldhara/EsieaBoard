@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.esieaboard.models.ClubModel;
+import com.example.esieaboard.models.EventModel;
 
 import java.util.ArrayList;
 
@@ -18,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button newClubButton;
     RecyclerView clubsRecyclerView, eventsRecyclerView;
     DataBaseHelper dataBaseHelper;
-    ArrayList<String> club_id, club_name, club_description;
-    ArrayList<String> event_id, event_club_id, event_name, event_description, event_date, event_location, event_capacity;
-    ClubCustomAdapter customAdapter;
+    ArrayList<ClubModel> clubs;
+    ArrayList<EventModel> events;
+    MixedAdapter clubsAdapter, eventsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +51,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
-        club_id = new ArrayList<>();
-        club_name = new ArrayList<>();
-        club_description = new ArrayList<>();
+
+        clubs = new ArrayList<>();
+        events = new ArrayList<>();
 
         displayClubs();
+        displayEvents();
 
-        customAdapter = new ClubCustomAdapter(MainActivity.this, club_id, club_name, club_description);
-        clubsRecyclerView.setAdapter(customAdapter);
+        clubsAdapter = new MixedAdapter(MainActivity.this, new ArrayList<>(), clubs);
+        clubsRecyclerView.setAdapter(clubsAdapter);
         clubsRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        eventsAdapter = new MixedAdapter(MainActivity.this, events, new ArrayList<>());
+        eventsRecyclerView.setAdapter(eventsAdapter);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
     void displayClubs() {
         Cursor cursor = dataBaseHelper.readClubData();
         if(cursor.getCount() > 0) {
             while(cursor.moveToNext()) {
-                club_id.add(cursor.getString(0));
-                club_name.add(cursor.getString(1));
-                club_description.add(cursor.getString(2));
+                clubs.add(new ClubModel(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
             }
         }
     }
@@ -75,13 +80,9 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = dataBaseHelper.readEventData();
         if(cursor.getCount() > 0) {
             while(cursor.moveToNext()) {
-                event_id.add(cursor.getString(0));
-                event_club_id.add(cursor.getString(1));
-                event_name.add(cursor.getString(2));
-                event_description.add(cursor.getString(3));
-                event_date.add(cursor.getString(4));
-                event_location.add(cursor.getString(5));
-                event_capacity.add(cursor.getString(6));
+                events.add(new EventModel(cursor.getInt(0), cursor.getInt(1), cursor.getString(2),
+                        cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                        cursor.getInt(6)));
             }
         }
     }

@@ -34,7 +34,7 @@
     <ImageView android:layout_width="192dp" android:layout_height="173dp"
                android:id="@+id/logo_image"
                android:src="@drawable/club_picture"
-               android:padding="0dp"/>
+               android:padding="10dp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_name"
