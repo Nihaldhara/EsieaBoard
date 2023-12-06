@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+005] - 2023-12-05
+
+### Added
+ - "EditEventActivity" file was added, editing the data stored in the database for a selected event
+
+### Changed
+ - "EditUserActivity" and "EditClubActivity" are now both operational, editing the data stored in the database for a selected element
+ - .idea file was removed from the repository
+
+### Fixed
+ - The "capacity" attribute of the "EventModel" model class is now correctly used as an int in other activities
+
 ## [1.0.0-dev+004] - 2023-12-05
 
 ### Changed
