@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+006] - 2023-12-06
+
+### Changed
+ - "LogInActivity" and "SignInActivity" are now fully operationnal and can send/retrieve data from the database
+ - "LogInActivity" is now the launching activity
+ - The database is now on version 3, where a descritpion was added to the user table and an email address was added to the club table
+ - "UserProfile", "EditUserActivity" and "UserModel" were updated to match the new features (log in/sign in, database v3)
+
 ## [1.0.0-dev+005] - 2023-12-05
 
 ### Added
