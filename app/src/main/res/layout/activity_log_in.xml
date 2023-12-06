@@ -14,20 +14,18 @@
               android:textColorHint="@color/black"/>
 
     <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:id="@+id/email_address_edit"
+              android:id="@+id/email_address_input"
               android:hint="@string/email_address"
               android:inputType="textEmailAddress"
               android:autofillHints="emailAddress"
-              android:textSize="24sp"
-              android:textColorHint="@color/black"/>
+              android:textSize="24sp"/>
 
     <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:id="@+id/password_edit"
+              android:id="@+id/password_input"
               android:hint="@string/password"
-              android:inputType="numberPassword"
+              android:inputType="textPassword"
               android:autofillHints="password"
-              android:textSize="24sp"
-              android:textColorHint="@color/black"/>
+              android:textSize="24sp"/>
 
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/confirm_button"

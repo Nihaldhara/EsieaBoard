@@ -2,7 +2,9 @@ package com.example.esieaboard.models;
 
 import org.jetbrains.annotations.NotNull;
 
-public class EventModel {
+import java.io.Serializable;
+
+public class EventModel implements Serializable {
     private int id;
     private int clubId;
     private String name;

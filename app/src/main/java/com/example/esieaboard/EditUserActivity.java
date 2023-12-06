@@ -5,13 +5,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.esieaboard.models.UserModel;
 
 public class EditUserActivity extends AppCompatActivity {
 
     Button cancelButton, confirmButton;
-    EditText nameInput, emailInput, descriptionInput;
-    int id;
-    String name, email, description;
+    EditText nameInput, emailInput, descriptionInput, passwordInput;
+    UserModel user;
+    String name, email, password, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class EditUserActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.name_input);
         emailInput = findViewById(R.id.email_address_input);
         descriptionInput = findViewById(R.id.description_input);
+        passwordInput = findViewById(R.id.password_input);
 
         getSetIntentData();
 
@@ -40,24 +42,22 @@ public class EditUserActivity extends AppCompatActivity {
                 DataBaseHelper dataBase = new DataBaseHelper(EditUserActivity.this);
                 name = nameInput.getText().toString().trim();
                 email = emailInput.getText().toString().trim();
+                password = passwordInput.getText().toString().trim();
                 description = descriptionInput.getText().toString().trim();
-                dataBase.updateUser(String.valueOf(id), name, email, description);
+                dataBase.updateUser(String.valueOf(user.getId()), name, email, password, description);
                 finish();
             }
         });
     }
 
     void getSetIntentData() {
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("name")
-            && getIntent().hasExtra("email") && getIntent().hasExtra("description")) {
-            id = getIntent().getIntExtra("id", -1);
-            name = getIntent().getStringExtra("name");
-            email = getIntent().getStringExtra("email");
-            description = getIntent().getStringExtra("description");
+        if(getIntent().hasExtra("user")) {
+            user = (UserModel) getIntent().getSerializableExtra("user");
 
-            nameInput.setText(name);
-            emailInput.setText(email);
-            descriptionInput.setText(description);
+            nameInput.setText(user.getFirstName());
+            emailInput.setText(user.getEmailAddress());
+            passwordInput.setText(user.getPassword());
+            descriptionInput.setText(user.getDescription());
         }
     }
 }

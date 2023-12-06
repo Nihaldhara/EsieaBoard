@@ -2,7 +2,9 @@ package com.example.esieaboard.models;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SubscriptionModel {
+import java.io.Serializable;
+
+public class SubscriptionModel implements Serializable {
     private int id;
     private int userId;
     private int clubId;

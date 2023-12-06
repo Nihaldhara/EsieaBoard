@@ -2,31 +2,35 @@ package com.example.esieaboard.models;
 
 import org.jetbrains.annotations.NotNull;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
 
     private int id;
     private String firstName;
     private String lastName;
     private String emailAddress;
     private String password;
+    private String description;
 
-    public UserModel(int id, String first_name, String last_name, String email_address, String password) {
+    public UserModel(int id, String first_name, String last_name, String email_address, String password, String description) {
         this.id = id;
         this.firstName = first_name;
         this.lastName = last_name;
         this.emailAddress = email_address;
         this.password = password;
+        this.description = description;
     }
 
-    @NotNull
     @Override
     public String toString() {
         return "UserModel{" +
                 "id=" + id +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
-                ", email_address='" + emailAddress + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -68,5 +72,13 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

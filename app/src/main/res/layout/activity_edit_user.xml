@@ -32,6 +32,18 @@
               android:id="@+id/email_address_input"
               android:hint="address@et.esiea.fr" android:minHeight="48dp"/>
 
+    <TextView
+            android:text="Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:id="@+id/password_input" android:minHeight="48dp"/>
+
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:text="Description"/>
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.esieaboard.models.ClubModel;
 import com.example.esieaboard.models.EventModel;
+import com.example.esieaboard.models.UserModel;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,7 @@ public class EsieaBoardActivity extends AppCompatActivity {
     ArrayList<ClubModel> clubs;
     ArrayList<EventModel> events;
     MixedAdapter clubsAdapter, eventsAdapter;
+    UserModel user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,13 @@ public class EsieaBoardActivity extends AppCompatActivity {
         userImageButton = findViewById(R.id.user_profile_button);
         newClubButton = findViewById(R.id.new_club_button);
 
+        user = (UserModel) getIntent().getSerializableExtra("user");
+
         userImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EsieaBoardActivity.this, UserProfileActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
