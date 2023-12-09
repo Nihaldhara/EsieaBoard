@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+007] - 2023-12-09
+
+### Changed
+ - Now on our database version 4
+ - Some creation and editing changes now show up immediately on screen without needing to restart the app (still need to fix a few in the future)
+ - Events now show up on the main page only when subscribed to the club organizing them
+
+### Added
+ - `Attendance` table, containing data on user attendance to events
+ - `Subscribe` and `Unsubscribe` buttons were added on club profiles
+ - `Attend` button and counter were added on event pages, as well as a `Cancel` button
+ - `Delete profile` button was added on club profiles
+
 ## [1.0.0-dev+006] - 2023-12-06
 
 ### Changed
