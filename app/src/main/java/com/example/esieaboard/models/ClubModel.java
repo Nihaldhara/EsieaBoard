@@ -8,11 +8,13 @@ public class ClubModel implements Serializable {
 
     private int id;
     private String name;
+    private String email;
     private String description;
 
-    public ClubModel(int id, String name, String description) {
+    public ClubModel(int id, String name, String email, String description) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.description = description;
     }
 
@@ -22,6 +24,7 @@ public class ClubModel implements Serializable {
         return "ClubModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
@@ -40,6 +43,14 @@ public class ClubModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDescription() {

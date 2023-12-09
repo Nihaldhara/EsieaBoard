@@ -1,15 +1,20 @@
-package com.example.esieaboard;
+package com.example.esieaboard.admin;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.esieaboard.DataBaseHelper;
+import com.example.esieaboard.R;
+import com.example.esieaboard.models.EventModel;
 
 public class EditEventActivity extends AppCompatActivity {
 
     EditText inputName, inputDate, inputLocation, inputCapacity, inputDescription;
     Button buttonConfirm, buttonCancel;
+    EventModel event;
     int id, capacity;
     String club_id, name, date, location, description;
 
@@ -40,35 +45,31 @@ public class EditEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DataBaseHelper dataBase = new DataBaseHelper(EditEventActivity.this);
-                name = inputName.getText().toString().trim();
-                date = inputDate.getText().toString().trim();
-                location = inputLocation.getText().toString().trim();
-                description = inputDescription.getText().toString().trim();
-                capacity = Integer.parseInt(inputCapacity.getText().toString().trim());
-                dataBase.updateEvent(String.valueOf(id), name, date, location, description, capacity);
+                event.setName(inputName.getText().toString().trim());
+                event.setDate(inputDate.getText().toString().trim());
+                event.setLocation(inputLocation.getText().toString().trim());
+                event.setDescription(inputDescription.getText().toString().trim());
+                event.setCapacity(Integer.parseInt(inputCapacity.getText().toString().trim()));
+                dataBase.updateEvent(event);
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("event", event);
+                setResult(RESULT_OK, resultIntent);
+
                 finish();
             }
         });
     }
 
     void getSetIntentData() {
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("name")
-            && getIntent().hasExtra("date") && getIntent().hasExtra("location")
-            && getIntent().hasExtra("description") && getIntent().hasExtra("capacity")
-            && getIntent().hasExtra("club_id")) {
-            id = getIntent().getIntExtra("id", -1);
-            club_id = getIntent().getStringExtra("club_id");
-            name = getIntent().getStringExtra("name");
-            date = getIntent().getStringExtra("date");
-            location = getIntent().getStringExtra("location");
-            description = getIntent().getStringExtra("description");
-            capacity = getIntent().getIntExtra("capacity", -1);
+        if(getIntent().hasExtra("event")) {
+            event = (EventModel) getIntent().getSerializableExtra("event");
 
-            inputName.setText(name);
-            inputDate.setText(date);
-            inputLocation.setText(location);
-            inputDescription.setText(description);
-            inputCapacity.setText(String.valueOf(capacity));
+            inputName.setText(event.getName());
+            inputDate.setText(event.getDate());
+            inputLocation.setText(event.getLocation());
+            inputDescription.setText(event.getDescription());
+            inputCapacity.setText(String.valueOf(event.getCapacity()));
         }
     }
 }

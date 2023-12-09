@@ -62,16 +62,52 @@
               android:textColorHint="@color/black"
               android:padding="30dp"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:hint="Capacity"
-            android:layout_margin="10dp"
-            android:layout_gravity="end"
-            android:id="@+id/event_capacity"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="end"
+                  android:layout_margin="10dp">
+
+        <TextView
+                android:hint="Attendees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:id="@+id/event_attendees" android:textAlignment="viewEnd"/>
+
+        <TextView
+                android:text="/"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:hint="Capacity"
+                android:layout_gravity="end"
+                android:id="@+id/event_capacity"/>
+
+    </LinearLayout>
+
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
+
+    <Button
+            android:text="Attend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="visible"
+            android:id="@+id/attend_button"/>
+
+    <Button
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:id="@+id/cancel_button"/>
 
 </LinearLayout>

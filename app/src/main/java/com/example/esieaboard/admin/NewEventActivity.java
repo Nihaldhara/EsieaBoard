@@ -1,16 +1,19 @@
-package com.example.esieaboard;
+package com.example.esieaboard.admin;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.esieaboard.DataBaseHelper;
+import com.example.esieaboard.R;
 import com.example.esieaboard.models.EventModel;
 
 public class NewEventActivity extends AppCompatActivity {
 
     EditText inputName, inputDate, inputLocation, inputCapacity, inputDescription;
     Button buttonConfirm, buttonCancel;
+    EventModel event;
     int club_id;
 
     @Override
@@ -39,10 +42,11 @@ public class NewEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(NewEventActivity.this);
-                EventModel eventModel = new EventModel(-1, club_id, inputName.getText().toString(),
+                event = new EventModel(-1, club_id, inputName.getText().toString(),
                         inputDescription.getText().toString(), inputDate.getText().toString(),
                         inputLocation.getText().toString(), Integer.parseInt(inputCapacity.getText().toString()));
-                dataBaseHelper.addEvent(eventModel);
+                dataBaseHelper.addEvent(event);
+                setResult(RESULT_OK);
                 finish();
             }
         });

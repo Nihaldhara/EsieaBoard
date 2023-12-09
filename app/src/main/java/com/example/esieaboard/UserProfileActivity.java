@@ -13,6 +13,8 @@ import com.example.esieaboard.models.UserModel;
 
 public class UserProfileActivity extends AppCompatActivity {
 
+    private static final int EDIT_PROFILE_REQUEST_CODE = 1;
+
     ImageButton backButton;
     Button logOutButton, modifyButton;
     ImageView imageViewProfile;
@@ -36,11 +38,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
         user = (UserModel) getIntent().getSerializableExtra("user");
 
-        String userName = user.getFirstName() + " " + user.getLastName();
-        nameText.setText(userName);
-        emailText.setText(user.getEmailAddress());
-        descriptionText.setText(user.getDescription());
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,8 +50,35 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(UserProfileActivity.this, EditUserActivity.class);
                 intent.putExtra("user", user);
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE);
             }
         });
+
+        updateUserUI(user);
+    }
+
+    void updateUserUI(UserModel user) {
+        DataBaseHelper dataBase = new DataBaseHelper(UserProfileActivity.this);
+
+        user = dataBase.getUserById(user.getId());
+
+        if (user != null) {
+            String userName = user.getFirstName() + " " + user.getLastName();
+            nameText.setText(userName);
+            emailText.setText(user.getEmailAddress());
+            descriptionText.setText(user.getDescription());
+        }
+    }
+
+    // In UserProfileActivity.java
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Update the UI with the new data
+            UserModel updatedUser = (UserModel) data.getSerializableExtra("user");
+            updateUserUI(updatedUser);
+        }
     }
 }

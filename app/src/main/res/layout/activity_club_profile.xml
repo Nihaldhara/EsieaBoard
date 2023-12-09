@@ -51,6 +51,28 @@
               android:textAlignment="center"
               android:paddingBottom="16dp"/>
 
+    <Button
+            android:text="Delete Club Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/delete_button"/>
+
+    <Button
+            android:text="Subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/subscribe_button"
+            android:visibility="visible"/>
+
+    <Button
+            android:text="Unsubscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/unsubscribe_button"
+            android:visibility="gone"/>
+
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
 

@@ -1,17 +1,19 @@
-package com.example.esieaboard;
+package com.example.esieaboard.admin;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.esieaboard.DataBaseHelper;
+import com.example.esieaboard.R;
+import com.example.esieaboard.models.ClubModel;
 
 public class EditClubActivity extends AppCompatActivity {
 
     Button cancelButton, confirmButton;
     EditText nameInput, emailInput, descriptionInput;
-    int id;
-    String name, email, description;
+    ClubModel club;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,10 @@ public class EditClubActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DataBaseHelper dataBase = new DataBaseHelper(EditClubActivity.this);
-                name = nameInput.getText().toString().trim();
-                description = descriptionInput.getText().toString().trim();
-                dataBase.updateClub(String.valueOf(id), name, description);
+                club.setName(nameInput.getText().toString().trim());
+                club.setEmail(emailInput.getText().toString().trim());
+                club.setDescription(descriptionInput.getText().toString().trim());
+                dataBase.updateClub(club);
                 finish();
             }
         });
@@ -49,12 +52,11 @@ public class EditClubActivity extends AppCompatActivity {
     void getSetIntentData() {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("name")
                 && getIntent().hasExtra("description")) {
-            id = getIntent().getIntExtra("id", -1);
-            name = getIntent().getStringExtra("name");
-            description = getIntent().getStringExtra("description");
+            club = (ClubModel) getIntent().getSerializableExtra("club");
 
-            nameInput.setText(name);
-            descriptionInput.setText(description);
+            nameInput.setText(club.getName());
+            emailInput.setText(club.getEmail());
+            descriptionInput.setText(club.getDescription());
         }
     }
 }

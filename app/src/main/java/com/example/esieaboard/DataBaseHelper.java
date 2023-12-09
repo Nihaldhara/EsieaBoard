@@ -6,10 +6,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.media.metrics.Event;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.example.esieaboard.models.*;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -33,9 +35,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String ADMINISTRATOR_TABLE = "ADMINISTRATORS";
     public static final String EVENT_TABLE = "EVENTS";
     public static final String COLUMN_NATURE = "NATURE";
+    private static final String ATTENDANCE_TABLE = "ATTENDANCE";
+    private static final String COLUMN_EVENT_ID = "EVENT_ID";
+    private static final String COLUMN_STATUS = "STATUS";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "esieaboard.db", null, 3);
+        super(context, "esieaboard.db", null, 4);
     }
 
     @Override
@@ -87,11 +92,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + ") " +
                 ");";
 
+        String createAttendanceTable = "CREATE TABLE " + ATTENDANCE_TABLE +
+                "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                COLUMN_USER_ID + " INT NOT NULL, " +
+                COLUMN_EVENT_ID + " INT NOT NULL, " +
+                COLUMN_STATUS + " INT NOT NULL, " +
+                "FOREIGN KEY (" + COLUMN_USER_ID + ") " +
+                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + "), " +
+                "FOREIGN KEY (" + COLUMN_EVENT_ID + ") " +
+                "REFERENCES " + EVENT_TABLE + " (" + COLUMN_ID + ") " +
+                ");";
+
         sqLiteDatabase.execSQL(createUserTable);
         sqLiteDatabase.execSQL(createClubTable);
         sqLiteDatabase.execSQL(createEventTable);
         sqLiteDatabase.execSQL(createAdministratorTable);
         sqLiteDatabase.execSQL(createSubscriptionTable);
+        sqLiteDatabase.execSQL(createAttendanceTable);
     }
 
     @Override
@@ -101,6 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EVENT_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ADMINISTRATOR_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SUBSCRIPTION_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ATTENDANCE_TABLE);
 
         onCreate(sqLiteDatabase);
     }
@@ -124,6 +142,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NAME, clubModel.getName());
+        cv.put(COLUMN_EMAIL_ADDRESS, clubModel.getEmail());
         cv.put(COLUMN_DESCRIPTION, clubModel.getDescription());
 
         long insert = sqLiteDatabase.insert(CLUB_TABLE, null, cv);
@@ -173,7 +192,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
-    Cursor readClubData() {
+    public boolean addAttendance(AttendanceModel attendanceModel) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_EVENT_ID, attendanceModel.getEventId());
+        cv.put(COLUMN_USER_ID, attendanceModel.getUserId());
+        cv.put(COLUMN_STATUS, attendanceModel.getStatus());
+
+        long insert = sqLiteDatabase.insert(ATTENDANCE_TABLE, null, cv);
+
+        return insert != -1;
+    }
+
+    public Cursor readSubscriptionData() {
+        String query = "SELECT * FROM " + SUBSCRIPTION_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor readClubData() {
         String query = "SELECT * FROM " + CLUB_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -184,7 +227,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    Cursor readEventData() {
+    public Cursor readEventData() {
         String query = "SELECT * FROM " + EVENT_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -195,69 +238,56 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void updateClub(String row_id, String name, String description) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_NAME, name);
-        cv.put(COLUMN_DESCRIPTION, description);
+    public Cursor readAttendanceData() {
+        String query = "SELECT * FROM " + ATTENDANCE_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        sqLiteDatabase.update(CLUB_TABLE, cv, " id=?", new String[]{row_id});
-    }
-
-    void updateUser(String row_id, String name, String email, String password, String description) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_FIRST_NAME, name);
-        cv.put(COLUMN_EMAIL_ADDRESS, email);
-        cv.put(COLUMN_PASSWORD_HASH, password);
-        cv.put(COLUMN_DESCRIPTION, description);
-
-        sqLiteDatabase.update(USER_TABLE, cv, " id=?", new String[]{row_id});
-    }
-
-    void updateEvent(String row_id, String name, String date, String location, String description, int capacity) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_NAME, name);
-        cv.put(COLUMN_DATE, date);
-        cv.put(COLUMN_LOCATION, location);
-        cv.put(COLUMN_DESCRIPTION, description);
-        cv.put(COLUMN_CAPACITY, String.valueOf(capacity));
-
-        sqLiteDatabase.update(EVENT_TABLE, cv, " id=?", new String[]{row_id});
-    }
-
-    boolean checkEmail(String email) {
-        SQLiteDatabase dataBase = this.getWritableDatabase();
-        Cursor cursor = dataBase.rawQuery("Select * from " + USER_TABLE + " where email_adress = ?", new String[]{email});
-        if (cursor.getCount() > 0) {
-            return true;
-        } else {
-            return false;
+        Cursor cursor = null;
+        if (sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
         }
+        return cursor;
     }
 
-    boolean checkEmailPassword(String email, String password) {
-        SQLiteDatabase dataBase = this.getWritableDatabase();
-        Cursor cursor = dataBase.rawQuery("Select * from " + USER_TABLE + " where " +
-                COLUMN_EMAIL_ADDRESS + " = ? and " + COLUMN_PASSWORD_HASH + " = ?", new String[]{email, password});
-        if (cursor.getCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public void updateClub(ClubModel club) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, club.getName());
+        cv.put(COLUMN_EMAIL_ADDRESS, club.getEmail());
+        cv.put(COLUMN_DESCRIPTION, club.getDescription());
+
+        sqLiteDatabase.update(CLUB_TABLE, cv, " id=?", new String[]{String.valueOf(club.getId())});
     }
 
-    // Inside DataBaseHelper.java
+    public void updateUser(UserModel user) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_FIRST_NAME, user.getFirstName());
+        cv.put(COLUMN_LAST_NAME, user.getLastName());
+        cv.put(COLUMN_EMAIL_ADDRESS, user.getEmailAddress());
+        cv.put(COLUMN_PASSWORD_HASH, user.getPassword());
+        cv.put(COLUMN_DESCRIPTION, user.getDescription());
+
+        sqLiteDatabase.update(USER_TABLE, cv, " id=?", new String[]{String.valueOf(user.getId())});
+    }
+
+    public void updateEvent(EventModel event) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, event.getName());
+        cv.put(COLUMN_DATE, event.getDate());
+        cv.put(COLUMN_LOCATION, event.getLocation());
+        cv.put(COLUMN_DESCRIPTION, event.getDescription());
+        cv.put(COLUMN_CAPACITY, String.valueOf(event.getCapacity()));
+
+        sqLiteDatabase.update(EVENT_TABLE, cv, " id=?", new String[]{String.valueOf(event.getId())});
+    }
 
     @SuppressLint("Range")
-    // Inside DataBaseHelper.java
-
     public UserModel getUserByEmailAndPassword(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         UserModel user = null;
 
-        // Your SELECT query to retrieve all columns based on email and password
         String query = "SELECT * FROM " + USER_TABLE +
                 " WHERE " + COLUMN_EMAIL_ADDRESS + " = ? AND " + COLUMN_PASSWORD_HASH + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email, password});
@@ -279,5 +309,149 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    @SuppressLint("Range")
+    public UserModel getUserById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        UserModel user = null;
 
+        String query = "SELECT * FROM " + USER_TABLE +
+                " WHERE " + COLUMN_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME));
+            String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME));
+            String emailAddress = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_ADDRESS));
+            String userPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_HASH));
+            String userDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+
+            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription);
+        }
+
+        cursor.close();
+        db.close();
+
+        return user;
+    }
+
+    @SuppressLint("Range")
+    public ClubModel getClubById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ClubModel club = null;
+
+        String query = "SELECT * FROM " + CLUB_TABLE +
+                " WHERE " + COLUMN_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            int clubId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            String emailAddress = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_ADDRESS));
+            String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+
+            club = new ClubModel(clubId, name, emailAddress, description);
+        }
+
+        cursor.close();
+        db.close();
+
+        return club;
+    }
+
+    @SuppressLint("Range")
+    public EventModel getEventById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        EventModel event = null;
+
+        String query = "SELECT * FROM " + EVENT_TABLE +
+                " WHERE " + COLUMN_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            int eventId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            int clubId = cursor.getInt(cursor.getColumnIndex(COLUMN_CLUB_ID));
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+            String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
+            String location = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION));
+            int capacity = cursor.getInt(cursor.getColumnIndex(COLUMN_CAPACITY));
+
+            event = new EventModel(eventId, clubId, name, description, date, location, capacity);
+        }
+
+        cursor.close();
+        db.close();
+
+        return event;
+    }
+
+    @SuppressLint("Range")
+    public SubscriptionModel getSubscriptionByClubId(int clubId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        SubscriptionModel subscription = null;
+
+        String query = "SELECT * FROM " + SUBSCRIPTION_TABLE +
+                " WHERE " + COLUMN_CLUB_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(clubId)});
+
+        if(cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+            int nature = cursor.getInt(cursor.getColumnIndex(COLUMN_NATURE));
+
+            subscription = new SubscriptionModel(id, userId, clubId, nature);
+        }
+
+        cursor.close();
+        db.close();
+
+        return subscription;
+    }
+
+    @SuppressLint("Range")
+    public AttendanceModel getAttendanceByEventId(int eventId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        AttendanceModel attendanceModel = null;
+
+        String query = "SELECT * FROM " + ATTENDANCE_TABLE +
+                " WHERE " + COLUMN_EVENT_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(eventId)});
+
+        if(cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+            int status = cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS));
+
+            attendanceModel = new AttendanceModel(id, userId, eventId, status);
+        }
+
+        cursor.close();
+        db.close();
+
+        return attendanceModel;
+    }
+
+    public void deleteUserRow(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(USER_TABLE, " id=?", new String[]{id});
+    }
+    public void deleteClubRow(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(CLUB_TABLE, " id=?", new String[]{id});
+    }
+    public void deleteEventRow(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(EVENT_TABLE, " id=?", new String[]{id});
+    }
+
+    public void deleteSubscriptionRow(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(SUBSCRIPTION_TABLE, " id=?", new String[]{id});
+    }
+
+    public void deleteAttendanceRow(String id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        long result = database.delete(ATTENDANCE_TABLE, " id=?", new String[]{id});
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.esieaboard;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,6 @@ public class EditUserActivity extends AppCompatActivity {
     Button cancelButton, confirmButton;
     EditText nameInput, emailInput, descriptionInput, passwordInput;
     UserModel user;
-    String name, email, password, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,16 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DataBaseHelper dataBase = new DataBaseHelper(EditUserActivity.this);
-                name = nameInput.getText().toString().trim();
-                email = emailInput.getText().toString().trim();
-                password = passwordInput.getText().toString().trim();
-                description = descriptionInput.getText().toString().trim();
-                dataBase.updateUser(String.valueOf(user.getId()), name, email, password, description);
+                user.setFirstName(nameInput.getText().toString().trim());
+                user.setEmailAddress(emailInput.getText().toString().trim());
+                user.setPassword(passwordInput.getText().toString().trim());
+                user.setDescription(descriptionInput.getText().toString().trim());
+                dataBase.updateUser(user);
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("user", user);
+                setResult(RESULT_OK, resultIntent);
+
                 finish();
             }
         });
