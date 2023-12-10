@@ -16,12 +16,12 @@ The fundamental structure of the application includes a main board, allowing use
 
 ## Features
 
- - Club and Event Listings: The main board serves as a centralized hub where users can seamlessly explore an extensive array of student clubs and upcoming events. Users can browse through the listings, gaining quick insights into each club's description, its upcoming events, and the ability to directly access more detailed information.
- - Event Management: Club administrators have robust tools for managing events efficiently. They can effortlessly create new events, edit existing ones, and even cancel events if necessary. Additionally, users can easily interact with events, providing organizers with a clear idea of attendance and enabling better event planning.
- - User Interaction: Users can actively engage with the community by following clubs of interest and indicating their participation in upcoming events. The application fosters a sense of community involvement through these interactions, allowing users to stay connected with the clubs and events that align with their preferences.
- - Customization: Users have the ability to personalize their profiles by providing a brief description about themselves. While the customization options are currently limited to descriptions, this feature allows users to express their interests and create a more personalized profile within the app.
- - Admin Features: Administrators wield key functionalities to manage the application effectively. They can create new clubs, schedule events, and regulate user permissions within the app. Admins play a crucial role in maintaining the integrity of the platform and ensuring a smooth user experience.
- - Technologies Used: The application utilizes Java for the front end, providing a robust and familiar user interface for Android users. The backend is powered by SQLite, a lightweight and efficient relational database management system. This combination allows for seamless data storage and retrieval, contributing to the overall performance of the application.
+ - **Club and Event Listings**: The main board serves as a centralized hub where users can seamlessly explore an extensive array of student clubs and upcoming events. Users can browse through the listings, gaining quick insights into each club's description, its upcoming events, and the ability to directly access more detailed information.
+ - **Event Management**: Club administrators have robust tools for managing events efficiently. They can effortlessly create new events, edit existing ones, and even cancel events if necessary. Additionally, users can easily interact with events, providing organizers with a clear idea of attendance and enabling better event planning.
+ - **User Interaction**: Users can actively engage with the community by following clubs of interest and indicating their participation in upcoming events. The application fosters a sense of community involvement through these interactions, allowing users to stay connected with the clubs and events that align with their preferences.
+ - **Customization**: Users have the ability to personalize their profiles by providing a brief description about themselves. While the customization options are currently limited to descriptions, this feature allows users to express their interests and create a more personalized profile within the app.
+ - **Admin Features**: Administrators wield key functionalities to manage the application effectively. They can create new clubs, schedule events, and regulate user permissions within the app. Admins play a crucial role in maintaining the integrity of the platform and ensuring a smooth user experience.
+ - **Technologies Used**: The application utilizes Java for the front end, providing a robust and familiar user interface for Android users. The backend is powered by SQLite, a lightweight and efficient relational database management system. This combination allows for seamless data storage and retrieval, contributing to the overall performance of the application.
 
 ## Prerequisites
 
@@ -43,7 +43,9 @@ The fundamental structure of the application includes a main board, allowing use
 ## Usage
 This application's database is initialized with three default users, each with different administrator rights levels. Here is a guide on how each type of user works, and how to create your own clubs and events board ! 
 
-### `User` admnistration level : 
+**/!\ In the following examples, the application has already been used to create Clubs and Events. In the version you are downloading, these clubs and events are for you to create, using the `admin` user ! Therefore, the board will be empty upon opening the app for the first time. Enjoy !**
+
+`User` admnistration level : 
 This is the base user level of this application. As a simple `user`, you can browse the already created clubs, follow their profiles, and see what kind of events they are planning for the future. You can also decide to attend those events, and notify the club.
 This user can also personnalize their profile. 
 To access this user profile, here are the credentials : `email: jdutronc@et.esiea.fr | password: password`
