@@ -1,6 +1,7 @@
 package com.example.esieaboard;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -8,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.esieaboard.admin.ManageAdministratorsActivity;
+import com.example.esieaboard.models.ClubModel;
 import com.example.esieaboard.models.UserModel;
+
+import java.util.ArrayList;
 
 import static android.view.View.GONE;
 
@@ -22,7 +27,6 @@ public class UserProfileActivity extends AppCompatActivity {
     Button logOutButton, modifyButton, manageRightsButton;
     ImageView imageViewProfile;
     TextView nameText, emailText, descriptionText;
-    RecyclerView recyclerView;
     UserModel user;
 
     @Override
@@ -38,7 +42,6 @@ public class UserProfileActivity extends AppCompatActivity {
         nameText = findViewById(R.id.user_name);
         emailText = findViewById(R.id.user_email_address);
         descriptionText = findViewById(R.id.user_description);
-        recyclerView = findViewById(R.id.recycler_view);
 
         user = (UserModel) getIntent().getSerializableExtra("user");
         updateUserUI(user);
@@ -92,7 +95,6 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    // In UserProfileActivity.java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

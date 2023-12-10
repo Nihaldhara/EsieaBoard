@@ -96,15 +96,7 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ClubViewHolder clubHolder = (ClubViewHolder) holder;
             ClubModel club = clubs.get(position);
             clubHolder.clubName.setText(club.getName());
-            /*clubHolder.clubsLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, ClubProfileActivity.class);
-                    intent.putExtra("club", club);
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
-                }
-            });*/
+
             clubHolder.clubsLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -122,15 +114,6 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             eventHolder.eventLocation.setText(event.getLocation());
             eventHolder.eventCapacity.setText(String.valueOf(event.getCapacity()));
 
-            /*eventHolder.eventsLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, EventPageActivity.class);
-                    intent.putExtra("event", event);
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
-                }
-            });*/
             eventHolder.eventsLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

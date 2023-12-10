@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+009] - 2023-12-10
+
+### Added
+ - `Delete` button on the `EventPageActivity`
+ - `Back` button on the `ManageAdministratorsActivity`
+
+### Fixed
+ - It is no longer possible to create a second user with the same email address
+
 ## [1.0.0-dev+008] - 2023-12-10
 
 ### Added

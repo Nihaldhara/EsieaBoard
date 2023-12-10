@@ -1,6 +1,8 @@
 package com.example.esieaboard.admin;
 
 import android.database.Cursor;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 
 public class ManageAdministratorsActivity extends AppCompatActivity {
 
+    ImageButton backButton;
     RecyclerView usersRecyclerView;
     DataBaseHelper dataBaseHelper;
     ArrayList<UserModel> users;
@@ -27,6 +30,15 @@ public class ManageAdministratorsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_administrators);
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         usersRecyclerView = findViewById(R.id.users_list);
         dataBaseHelper = new DataBaseHelper(ManageAdministratorsActivity.this);

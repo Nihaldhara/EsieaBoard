@@ -56,36 +56,22 @@
               android:hint="@string/email_address_et_esiea_fr"
               android:textColorHint="@color/black"
               android:textSize="20sp"
-              android:paddingBottom="16dp" android:textAlignment="center"/>
+              android:textAlignment="center"/>
 
     <Button
             android:text="Manage Rights"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/manage_rights_button"/>
+            android:id="@+id/manage_rights_button"
+            android:layout_margin="16dp"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/user_description"
-              android:hint="A rather long description about the person, what they want to say or I don't know whatever the people like to put on their profile description."
+              android:hint="Write something interesting about yourself!"
               android:textColorHint="@color/black"
               android:padding="30dp" android:textAlignment="textStart"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"/>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:hint="Followed:"
-              android:padding="16dp"
-              android:textColorHint="@color/black"
-              android:textSize="20dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recycler_view"/>
-
 
 </LinearLayout>

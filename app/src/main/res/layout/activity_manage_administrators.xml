@@ -7,6 +7,18 @@
         android:layout_height="match_parent"
         tools:context=".admin.ManageAdministratorsActivity" android:orientation="vertical">
 
+    <ImageButton android:layout_width="50dp" android:layout_height="50dp"
+                 android:id="@+id/back_button"
+                 android:src="@drawable/back_button"
+                 android:contentDescription="@string/back_button"
+                 android:layout_alignParentStart="true"
+                 android:layout_margin="16dp"
+                 android:scaleType="centerCrop"
+                 android:padding="0dp"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/black"/>
+
     <TextView
             android:text="Admin manager"
             android:layout_width="match_parent"

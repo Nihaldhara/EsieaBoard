@@ -328,6 +328,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
+    public UserModel getUserByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        UserModel user = null;
+
+        String query = "SELECT * FROM " + USER_TABLE +
+                " WHERE " + COLUMN_EMAIL_ADDRESS + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        if (cursor.moveToFirst()) {
+            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME));
+            String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME));
+            String emailAddress = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_ADDRESS));
+            String userPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_HASH));
+            String userDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+            int userRights = cursor.getInt(cursor.getColumnIndex(COLUMN_RIGHTS));
+
+            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription, userRights);
+        }
+
+        cursor.close();
+        db.close();
+
+        return user;
+    }
+
+    @SuppressLint("Range")
     public UserModel getUserById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         UserModel user = null;

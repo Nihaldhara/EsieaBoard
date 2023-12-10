@@ -213,6 +213,9 @@ public class ClubProfileActivity extends AppCompatActivity implements MixedAdapt
         } else if (requestCode == EDIT_CLUB_REQUEST_CODE && resultCode == RESULT_OK) {
             ClubModel updatedClub = (ClubModel) data.getSerializableExtra("club");
             updateClubUI(updatedClub);
+        } else if (requestCode == EVENT_PAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            displayEvents();
+            eventsAdapter.notifyDataSetChanged();
         }
     }
 
