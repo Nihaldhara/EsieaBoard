@@ -9,14 +9,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.esieaboard.admin.ManageAdministratorsActivity;
 import com.example.esieaboard.models.UserModel;
+
+import static android.view.View.GONE;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     private static final int EDIT_PROFILE_REQUEST_CODE = 1;
 
     ImageButton backButton;
-    Button logOutButton, modifyButton;
+    Button logOutButton, modifyButton, manageRightsButton;
     ImageView imageViewProfile;
     TextView nameText, emailText, descriptionText;
     RecyclerView recyclerView;
@@ -30,6 +33,7 @@ public class UserProfileActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         logOutButton = findViewById(R.id.log_out_button);
         modifyButton = findViewById(R.id.modify_button);
+        manageRightsButton = findViewById(R.id.manage_rights_button);
         imageViewProfile = findViewById(R.id.logo_image);
         nameText = findViewById(R.id.user_name);
         emailText = findViewById(R.id.user_email_address);
@@ -37,6 +41,25 @@ public class UserProfileActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
 
         user = (UserModel) getIntent().getSerializableExtra("user");
+        updateUserUI(user);
+
+        if(user.getRights() < 2) { manageRightsButton.setVisibility(GONE); }
+        manageRightsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserProfileActivity.this, ManageAdministratorsActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +77,6 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
-        updateUserUI(user);
     }
 
     void updateUserUI(UserModel user) {

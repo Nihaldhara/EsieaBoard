@@ -29,7 +29,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DataBaseHelper dataBase = new DataBaseHelper(SignInActivity.this);
                 UserModel user = new UserModel(-1, "", "",
-                        inputEmail.getText().toString(), inputPassword.getText().toString(), "");
+                        inputEmail.getText().toString(), inputPassword.getText().toString(), "", 0);
                 dataBase.addUser(user);
                 finish();
             }

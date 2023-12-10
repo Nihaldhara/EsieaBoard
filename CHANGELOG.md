@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+008] - 2023-12-10
+
+### Added
+ - RecyclerView displaying users in the `ManageAdministratorsActivity`
+ - Inserting three users with three different levels of rights on creation of the database
+
+### Removed
+ - Administrator table and model
+
+### Changed
+ - Introducing database version 12
+ - User table and model now have a `rights` column and variable
+
+### Fixed
+ - Changes in the database made through clicking on RecyclerView elements now show up in the main page without needing to relaunch the app
+ - `Log out` button is now fully functional
+ - `ManageAdministratorsActivity` is now fully functional, and allows administrators to manage user rights
+
 ## [1.0.0-dev+007] - 2023-12-09
 
 ### Changed

@@ -7,57 +7,77 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.metrics.Event;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.example.esieaboard.models.*;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import android.content.Context;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    public static final String USER_TABLE = "USERS";
-    public static final String COLUMN_NAME = "NAME";
-    public static final String COLUMN_FIRST_NAME = "FIRST_NAME";
-    public static final String COLUMN_LAST_NAME = "LAST_NAME";
-    public static final String COLUMN_EMAIL_ADDRESS = "EMAIL_ADDRESS";
-    public static final String COLUMN_PASSWORD_HASH = "PASSWORD_HASH";
-    public static final String COLUMN_ID = "ID";
-    public static final String CLUB_TABLE = "CLUBS";
-    public static final String COLUMN_DESCRIPTION = "DESCRIPTION";
-    public static final String COLUMN_CLUB_ID = "CLUB_ID";
-    public static final String COLUMN_DATE = "DATE";
-    public static final String COLUMN_LOCATION = "LOCATION";
-    public static final String COLUMN_CAPACITY = "CAPACITY";
-    public static final String COLUMN_USER_ID = "USER_ID";
-    public static final String COLUMN_RIGHTS = "RIGHTS";
-    public static final String SUBSCRIPTION_TABLE = "SUBSCRIPTIONS";
-    public static final String ADMINISTRATOR_TABLE = "ADMINISTRATORS";
-    public static final String EVENT_TABLE = "EVENTS";
-    public static final String COLUMN_NATURE = "NATURE";
-    private static final String ATTENDANCE_TABLE = "ATTENDANCE";
-    private static final String COLUMN_EVENT_ID = "EVENT_ID";
-    private static final String COLUMN_STATUS = "STATUS";
+    public static final String USER_TABLE = "Users";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_FIRST_NAME = "first_name";
+    public static final String COLUMN_LAST_NAME = "last_name";
+    public static final String COLUMN_EMAIL_ADDRESS = "email_address";
+    public static final String COLUMN_PASSWORD_HASH = "password_hash";
+    public static final String COLUMN_ID = "id";
+    public static final String CLUB_TABLE = "Clubs";
+    public static final String COLUMN_DESCRIPTION = "description";
+    public static final String COLUMN_CLUB_ID = "club_id";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_CAPACITY = "capacity";
+    public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_RIGHTS = "rights";
+    public static final String SUBSCRIPTION_TABLE = "Subscriptions";
+    public static final String EVENT_TABLE = "Events";
+    public static final String COLUMN_NATURE = "nature";
+    private static final String ATTENDANCE_TABLE = "Attendance";
+    private static final String COLUMN_EVENT_ID = "envet_id";
+    private static final String COLUMN_STATUS = "status";
+
+    private final Context context;
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "esieaboard.db", null, 4);
+        super(context, "esieaboard.db", null, 13);
+        this.context = context;
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         String createUserTable = "CREATE TABLE " + USER_TABLE +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 COLUMN_FIRST_NAME + " VARCHAR(128)," +
                 COLUMN_LAST_NAME + " VARCHAR(128)," +
                 COLUMN_EMAIL_ADDRESS + " VARCHAR(128) NOT NULL," +
                 COLUMN_PASSWORD_HASH + " VARCHAR(128) NOT NULL," +
-                COLUMN_DESCRIPTION + " TEXT);\n";
+                COLUMN_DESCRIPTION + " TEXT," +
+                COLUMN_RIGHTS + " INT NOT NULL" +
+                ");\n";
 
         String createClubTable = "CREATE TABLE " + CLUB_TABLE +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 COLUMN_NAME + " VARCHAR(128) NOT NULL, " +
                 COLUMN_EMAIL_ADDRESS + " VARCHAR(128) NOT NULL," +
-                COLUMN_DESCRIPTION + " TEXT NOT NULL);\n";
+                COLUMN_DESCRIPTION + " TEXT NOT NULL" +
+                ");\n";
 
         String createEventTable = "CREATE TABLE " + EVENT_TABLE +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -68,18 +88,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_LOCATION + " VARCHAR(128) NOT NULL, " +
                 COLUMN_CAPACITY + " INT, " +
                 "FOREIGN KEY (" + COLUMN_CLUB_ID + ")" +
-                "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + "));\n";
-
-        String createAdministratorTable = "CREATE TABLE " + ADMINISTRATOR_TABLE +
-                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                COLUMN_USER_ID + " INT NOT NULL, " +
-                COLUMN_CLUB_ID + " INT NOT NULL, " +
-                COLUMN_RIGHTS + " INT NOT NULL, " +
-                "FOREIGN KEY (" + COLUMN_USER_ID + ") " +
-                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + "), " +
-                "FOREIGN KEY (" + COLUMN_CLUB_ID + ") " +
-                "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + ")" +
-                ");";
+                "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + ") ON DELETE CASCADE" +
+                ");\n";
 
         String createSubscriptionTable = "CREATE TABLE " + SUBSCRIPTION_TABLE +
                 "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -87,10 +97,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_CLUB_ID + " INT NOT NULL, " +
                 COLUMN_NATURE + " INT NOT NULL, " +
                 "FOREIGN KEY (" + COLUMN_USER_ID + ") " +
-                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + "), " +
+                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + ") ON DELETE CASCADE, " +
                 "FOREIGN KEY (" + COLUMN_CLUB_ID + ") " +
-                "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + ") " +
-                ");";
+                "REFERENCES " + CLUB_TABLE + " (" + COLUMN_ID + ") ON DELETE CASCADE" +
+                ");\n";
 
         String createAttendanceTable = "CREATE TABLE " + ATTENDANCE_TABLE +
                 "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -98,17 +108,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_EVENT_ID + " INT NOT NULL, " +
                 COLUMN_STATUS + " INT NOT NULL, " +
                 "FOREIGN KEY (" + COLUMN_USER_ID + ") " +
-                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + "), " +
+                "REFERENCES " + USER_TABLE + " (" + COLUMN_ID + ") ON DELETE CASCADE," +
                 "FOREIGN KEY (" + COLUMN_EVENT_ID + ") " +
-                "REFERENCES " + EVENT_TABLE + " (" + COLUMN_ID + ") " +
-                ");";
+                "REFERENCES " + EVENT_TABLE + " (" + COLUMN_ID + ") ON DELETE CASCADE" +
+                ");\n";
+
+        String initializeUsers = "INSERT INTO " + USER_TABLE + "(first_name, last_name, email_address, password_hash, description, rights)" +
+                "VALUES ('Orlina', 'Joly', 'ojoly@et.esiea.fr', 'password', " +
+                "'Application creator, music enthusiast and a bit addicted to video games.', 2),\n" +
+                "('Hugh', 'Jackman', 'hjackman@et.esiea.fr', 'password', " +
+                "'The real Wolverine`s account. Beware fo the claws.', 1),\n" +
+                "('Jacques', 'Dutronc', 'jdutronc@et.esiea.fr', 'password', " +
+                "'Le roi de la chanson française (pas vraiment, mais moi je l`aime bien).', 0);";
 
         sqLiteDatabase.execSQL(createUserTable);
         sqLiteDatabase.execSQL(createClubTable);
         sqLiteDatabase.execSQL(createEventTable);
-        sqLiteDatabase.execSQL(createAdministratorTable);
         sqLiteDatabase.execSQL(createSubscriptionTable);
         sqLiteDatabase.execSQL(createAttendanceTable);
+        sqLiteDatabase.execSQL(initializeUsers);
     }
 
     @Override
@@ -116,7 +134,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CLUB_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EVENT_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ADMINISTRATOR_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SUBSCRIPTION_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ATTENDANCE_TABLE);
 
@@ -131,6 +148,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_LAST_NAME, userModel.getLastName());
         cv.put(COLUMN_EMAIL_ADDRESS, userModel.getEmailAddress());
         cv.put(COLUMN_PASSWORD_HASH, userModel.getPassword());
+        cv.put(COLUMN_RIGHTS, userModel.getRights());
 
         long insert = sqLiteDatabase.insert(USER_TABLE, null, cv);
 
@@ -166,19 +184,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
-    public boolean addAdministrator(AdministratorModel administratorModel) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN_CLUB_ID, administratorModel.getClubId());
-        cv.put(COLUMN_USER_ID, administratorModel.getUserId());
-        cv.put(COLUMN_RIGHTS, administratorModel.getRights());
-
-        long insert = sqLiteDatabase.insert(ADMINISTRATOR_TABLE, null, cv);
-
-        return insert != -1;
-    }
-
     public boolean addSubscription(SubscriptionModel subscriptionModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -207,6 +212,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor readSubscriptionData() {
         String query = "SELECT * FROM " + SUBSCRIPTION_TABLE;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    public Cursor readUserData() {
+        String query = "SELECT * FROM " + USER_TABLE;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -267,6 +283,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_EMAIL_ADDRESS, user.getEmailAddress());
         cv.put(COLUMN_PASSWORD_HASH, user.getPassword());
         cv.put(COLUMN_DESCRIPTION, user.getDescription());
+        cv.put(COLUMN_RIGHTS, user.getRights());
 
         sqLiteDatabase.update(USER_TABLE, cv, " id=?", new String[]{String.valueOf(user.getId())});
     }
@@ -299,8 +316,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             String emailAddress = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_ADDRESS));
             String userPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_HASH));
             String userDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+            int userRights = cursor.getInt(cursor.getColumnIndex(COLUMN_RIGHTS));
 
-            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription);
+            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription, userRights);
         }
 
         cursor.close();
@@ -325,8 +343,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             String emailAddress = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_ADDRESS));
             String userPassword = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_HASH));
             String userDescription = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
+            int userRights = cursor.getInt(cursor.getColumnIndex(COLUMN_RIGHTS));
 
-            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription);
+            user = new UserModel(userId, firstName, lastName, emailAddress, userPassword, userDescription, userRights);
         }
 
         cursor.close();
@@ -387,17 +406,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public SubscriptionModel getSubscriptionByClubId(int clubId) {
+    public SubscriptionModel getSubscriptionByClubAndUserId(int clubId, int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         SubscriptionModel subscription = null;
 
         String query = "SELECT * FROM " + SUBSCRIPTION_TABLE +
-                " WHERE " + COLUMN_CLUB_ID + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(clubId)});
+                " WHERE " + COLUMN_CLUB_ID + " = ? AND " + COLUMN_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(clubId), String.valueOf(userId)});
 
         if(cursor.moveToFirst()) {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
             int nature = cursor.getInt(cursor.getColumnIndex(COLUMN_NATURE));
 
             subscription = new SubscriptionModel(id, userId, clubId, nature);

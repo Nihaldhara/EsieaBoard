@@ -12,14 +12,16 @@ public class UserModel implements Serializable {
     private String emailAddress;
     private String password;
     private String description;
+    private int rights;
 
-    public UserModel(int id, String first_name, String last_name, String email_address, String password, String description) {
+    public UserModel(int id, String first_name, String last_name, String email_address, String password, String description, int rights) {
         this.id = id;
         this.firstName = first_name;
         this.lastName = last_name;
         this.emailAddress = email_address;
         this.password = password;
         this.description = description;
+        this.rights = rights;
     }
 
     @Override
@@ -31,6 +33,7 @@ public class UserModel implements Serializable {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
+                ", rights=" + rights +
                 '}';
     }
 
@@ -80,5 +83,13 @@ public class UserModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getRights() {
+        return rights;
+    }
+
+    public void setRights(int rights) {
+        this.rights = rights;
     }
 }

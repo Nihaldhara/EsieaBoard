@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,30 +22,55 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private static final int VIEW_TYPE_CLUB = 0;
     private static final int VIEW_TYPE_EVENT = 1;
+    private static final int VIEW_TYPE_USER = 2;
     private static final int EVENT_EDIT_REQUEST = 8;
 
     private Context context;
     private ArrayList<SubscriptionModel> subscriptions;
+    private ArrayList<UserModel> users;
     private ArrayList<EventModel> events;
     private ArrayList<ClubModel> clubs;
     private UserModel user;
+    public interface ClubClickListener {
+        void onClubClick(ClubModel club);
+    }
+    private ClubClickListener clubClickListener;
+    public interface EventClickListener {
+        void onEventClick(EventModel event);
+    }
+    private EventClickListener eventClickListener;
 
-    public MixedAdapter(Context context, ArrayList<SubscriptionModel> subscriptions, ArrayList<EventModel> events, ArrayList<ClubModel> clubs, UserModel user) {
+    public MixedAdapter(Context context, ArrayList<SubscriptionModel> subscriptions, ArrayList<UserModel> users, ArrayList<EventModel> events, ArrayList<ClubModel> clubs, UserModel user) {
         this.context = context;
         this.subscriptions = subscriptions;
+        this.users = users;
         this.events = events;
         this.clubs = clubs;
         this.user = user;
     }
 
+    public void setClubClickListener(ClubClickListener listener) {
+        this.clubClickListener = listener;
+    }
+
+    public void setEventClickListener(EventClickListener listener) {
+        this.eventClickListener = listener;
+    }
+
     @Override
     public int getItemCount() {
-        return clubs.size() + events.size();
+        return clubs.size() + events.size() + users.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position < clubs.size() ? VIEW_TYPE_CLUB : VIEW_TYPE_EVENT;
+        if (position < clubs.size()) {
+            return VIEW_TYPE_CLUB;
+        } else if (position < clubs.size() + events.size()) {
+            return VIEW_TYPE_EVENT;
+        } else {
+            return VIEW_TYPE_USER;
+        }
     }
 
     @NotNull
@@ -55,9 +81,12 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (viewType == VIEW_TYPE_CLUB) {
             View clubView = inflater.inflate(R.layout.club_board, parent, false);
             return new ClubViewHolder(clubView);
-        } else {
+        } else if (viewType == VIEW_TYPE_EVENT) {
             View eventView = inflater.inflate(R.layout.event_board, parent, false);
             return new EventViewHolder(eventView);
+        } else {
+            View userView = inflater.inflate(R.layout.admin_row, parent, false);
+            return new UserViewHolder(userView);
         }
     }
 
@@ -67,13 +96,21 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ClubViewHolder clubHolder = (ClubViewHolder) holder;
             ClubModel club = clubs.get(position);
             clubHolder.clubName.setText(club.getName());
-            clubHolder.clubsLayout.setOnClickListener(new View.OnClickListener() {
+            /*clubHolder.clubsLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ClubProfileActivity.class);
                     intent.putExtra("club", club);
                     intent.putExtra("user", user);
                     context.startActivity(intent);
+                }
+            });*/
+            clubHolder.clubsLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clubClickListener != null) {
+                        clubClickListener.onClubClick(club);
+                    }
                 }
             });
 
@@ -85,13 +122,51 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             eventHolder.eventLocation.setText(event.getLocation());
             eventHolder.eventCapacity.setText(String.valueOf(event.getCapacity()));
 
-            eventHolder.eventsLayout.setOnClickListener(new View.OnClickListener() {
+            /*eventHolder.eventsLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, EventPageActivity.class);
                     intent.putExtra("event", event);
                     intent.putExtra("user", user);
                     context.startActivity(intent);
+                }
+            });*/
+            eventHolder.eventsLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (eventClickListener != null) {
+                        eventClickListener.onEventClick(event);
+                    }
+                }
+            });
+
+        } else if (holder instanceof UserViewHolder) {
+            DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+            UserViewHolder userHolder = (UserViewHolder) holder;
+            UserModel userSelect = users.get(position - (clubs.size() + events.size()));
+            userHolder.userName.setText(userSelect.getFirstName());
+
+            userHolder.adminButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userSelect.setRights(2);
+                    dataBaseHelper.updateUser(userSelect);
+                }
+            });
+
+            userHolder.memberButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userSelect.setRights(1);
+                    dataBaseHelper.updateUser(userSelect);
+                }
+            });
+
+            userHolder.userButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userSelect.setRights(0);
+                    dataBaseHelper.updateUser(userSelect);
                 }
             });
         }
@@ -124,6 +199,19 @@ public class MixedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             eventLocation = itemView.findViewById(R.id.event_location);
             eventCapacity = itemView.findViewById(R.id.event_capacity);
             eventsLayout = itemView.findViewById(R.id.events_layout);
+        }
+    }
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
+        TextView userName;
+        Button adminButton, memberButton, userButton;
+
+        public UserViewHolder(View itemView) {
+            super(itemView);
+            userName = itemView.findViewById(R.id.user_name);
+            adminButton = itemView.findViewById(R.id.button_admin);
+            memberButton = itemView.findViewById(R.id.button_member);
+            userButton = itemView.findViewById(R.id.button_user);
         }
     }
 }

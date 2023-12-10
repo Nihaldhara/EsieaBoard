@@ -61,6 +61,10 @@ public class EventPageActivity extends AppCompatActivity {
             cancelButton.setVisibility(VISIBLE);
         }
 
+        if(countAttendance() >= event.getCapacity()) {
+            attendButton.setVisibility(GONE);
+        }
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,12 +72,14 @@ public class EventPageActivity extends AppCompatActivity {
             }
         });
 
+        if(user.getRights() < 1) { editButton.setVisibility(GONE); }
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EventPageActivity.this, EditEventActivity.class);
                 intent.putExtra("event", event);
                 startActivityForResult(intent, EDIT_EVENT_REQUEST_CODE);
+
             }
         });
 

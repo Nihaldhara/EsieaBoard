@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/admin_layout">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user_name"
+                    android:textSize="18sp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_vertical"/>
+
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <Button
+                        android:text="Admin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_admin"
+                        android:padding="0dp"
+                        android:layout_margin="10dp"/>
+
+                <Button
+                        android:text="Member"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_member"
+                        android:padding="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                <Button
+                        android:text="User"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_user"
+                        android:padding="0dp"
+                        android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

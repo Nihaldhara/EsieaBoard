@@ -1,5 +1,6 @@
 package com.example.esieaboard.admin;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,10 @@ public class EditClubActivity extends AppCompatActivity {
 
         getSetIntentData();
 
+        nameInput.setText(club.getName());
+        emailInput.setText(club.getEmail());
+        descriptionInput.setText(club.getDescription());
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,14 +49,18 @@ public class EditClubActivity extends AppCompatActivity {
                 club.setEmail(emailInput.getText().toString().trim());
                 club.setDescription(descriptionInput.getText().toString().trim());
                 dataBase.updateClub(club);
+                
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("club", club);
+                setResult(RESULT_OK, resultIntent);
+
                 finish();
             }
         });
     }
 
     void getSetIntentData() {
-        if(getIntent().hasExtra("id") && getIntent().hasExtra("name")
-                && getIntent().hasExtra("description")) {
+        if(getIntent().hasExtra("club")) {
             club = (ClubModel) getIntent().getSerializableExtra("club");
 
             nameInput.setText(club.getName());

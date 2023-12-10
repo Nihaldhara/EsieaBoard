@@ -5,6 +5,24 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.ManageAdministratorsActivity">
+        tools:context=".admin.ManageAdministratorsActivity" android:orientation="vertical">
 
+    <TextView
+            android:text="Admin manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColorHint="@color/black"
+            android:textSize="40dp"
+            android:textStyle="bold"/>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/black"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/users_list"/>
 </LinearLayout>

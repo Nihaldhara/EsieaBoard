@@ -42,6 +42,8 @@ public class LogInActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogInActivity.this, EsieaBoardActivity.class);
                     intent.putExtra("user", user); // Pass user model to the next activity
                     Toast.makeText(LogInActivity.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
+                    inputEmail.setText("");
+                    inputPassword.setText("");
                     startActivity(intent);
                 } else {
                     inputPassword.setText("");

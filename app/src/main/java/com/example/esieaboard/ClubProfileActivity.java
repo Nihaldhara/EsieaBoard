@@ -3,7 +3,6 @@ package com.example.esieaboard;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
@@ -23,9 +22,11 @@ import java.util.ArrayList;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ClubProfileActivity extends AppCompatActivity {
+public class ClubProfileActivity extends AppCompatActivity implements MixedAdapter.EventClickListener {
 
     private static final int CREATE_EVENT_REQUEST_CODE = 5;
+    private static final int EDIT_CLUB_REQUEST_CODE = 9;
+    private static final int EVENT_PAGE_REQUEST_CODE = 12;
 
     ImageButton backButton;
     Button modifyButton, newButton, deleteButton, subscribeButton, unsubscribeButton;
@@ -68,7 +69,8 @@ public class ClubProfileActivity extends AppCompatActivity {
 
         displayEvents();
 
-        eventsAdapter = new MixedAdapter(ClubProfileActivity.this, new ArrayList<>(), events, new ArrayList<>(), user);
+        eventsAdapter = new MixedAdapter(ClubProfileActivity.this, new ArrayList<>(), new ArrayList<>(), events, new ArrayList<>(), user);
+        eventsAdapter.setEventClickListener(this);
         recyclerView.setAdapter(eventsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(ClubProfileActivity.this));
 
@@ -77,6 +79,7 @@ public class ClubProfileActivity extends AppCompatActivity {
             unsubscribeButton.setVisibility(VISIBLE);
         }
 
+        if(user.getRights() < 1) { newButton.setVisibility(GONE); }
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,15 +97,17 @@ public class ClubProfileActivity extends AppCompatActivity {
             }
         });
 
+        if(user.getRights() < 1) { modifyButton.setVisibility(GONE); }
         modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ClubProfileActivity.this, EditClubActivity.class);
                 intent.putExtra("club", club);
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_CLUB_REQUEST_CODE);
             }
         });
 
+        if(user.getRights() < 2) { deleteButton.setVisibility(GONE); }
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,8 +132,8 @@ public class ClubProfileActivity extends AppCompatActivity {
 
                 if(cursor != null) {
                     while(cursor.moveToNext()) {
-                        if(cursor.getInt(2) == club.getId()) {
-                            subscription = dataBaseHelper.getSubscriptionByClubId(club.getId());
+                        if(cursor.getInt(1) == user.getId() && cursor.getInt(2) == club.getId()) {
+                            subscription = dataBaseHelper.getSubscriptionByClubAndUserId(club.getId(), user.getId());
                         }
                     }
                 }
@@ -137,6 +142,8 @@ public class ClubProfileActivity extends AppCompatActivity {
                 unsubscribeButton.setVisibility(GONE);
             }
         });
+
+        updateClubUI(club);
     }
 
     void getSetIntentData() {
@@ -149,12 +156,24 @@ public class ClubProfileActivity extends AppCompatActivity {
         }
     }
 
+    void updateClubUI(ClubModel club) {
+        DataBaseHelper dataBase = new DataBaseHelper(ClubProfileActivity.this);
+
+        club = dataBase.getClubById(club.getId());
+
+        if (club != null) {
+            clubName.setText(club.getName());
+            clubEmailAddress.setText(club.getEmail());
+            clubDescription.setText(club.getDescription());
+        }
+    }
+
     boolean subscribed() {
         Cursor cursor = dataBaseHelper.readSubscriptionData();
 
         if(cursor != null) {
             while(cursor.moveToNext()) {
-                if(cursor.getInt(2) == club.getId()) {
+                if(cursor.getInt(2) == club.getId() && cursor.getInt(1) == user.getId()) {
                     return true;
                 }
             }
@@ -191,6 +210,9 @@ public class ClubProfileActivity extends AppCompatActivity {
         if (requestCode == CREATE_EVENT_REQUEST_CODE && resultCode == RESULT_OK) {
             displayEvents();
             eventsAdapter.notifyDataSetChanged();
+        } else if (requestCode == EDIT_CLUB_REQUEST_CODE && resultCode == RESULT_OK) {
+            ClubModel updatedClub = (ClubModel) data.getSerializableExtra("club");
+            updateClubUI(updatedClub);
         }
     }
 
@@ -214,5 +236,13 @@ public class ClubProfileActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    @Override
+    public void onEventClick(EventModel event) {
+        Intent intent = new Intent(ClubProfileActivity.this, EventPageActivity.class);
+        intent.putExtra("event", event);
+        intent.putExtra("user", user);
+        startActivityForResult(intent, EVENT_PAGE_REQUEST_CODE);
     }
 }

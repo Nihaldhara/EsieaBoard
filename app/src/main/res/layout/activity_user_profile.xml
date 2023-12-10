@@ -58,6 +58,12 @@
               android:textSize="20sp"
               android:paddingBottom="16dp" android:textAlignment="center"/>
 
+    <Button
+            android:text="Manage Rights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/manage_rights_button"/>
+
     <View android:layout_width="match_parent" android:layout_height="1dp"
           android:background="@color/black"/>
 

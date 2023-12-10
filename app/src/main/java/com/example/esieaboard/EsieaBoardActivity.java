@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,12 +19,15 @@ import com.example.esieaboard.models.UserModel;
 
 import java.util.ArrayList;
 
-public class EsieaBoardActivity extends AppCompatActivity {
+import static android.view.View.GONE;
+
+public class EsieaBoardActivity extends AppCompatActivity implements MixedAdapter.ClubClickListener, MixedAdapter.EventClickListener {
 
     private static final int MANAGE_CLUBS_REQUEST_CODE = 4;
-    private static final int CLUB_PROFILE_REQUEST_CODE = 6;
+    private static final int LOG_OUT_REQUEST_CODE = 6;
     private static final int EVENT_EDIT_REQUEST = 8;
-
+    private static final int CLUB_PROFILE_REQUEST_CODE = 11;
+    private static final int EVENT_PAGE_REQUEST_CODE = 12;
 
     ImageButton userImageButton;
     Button newClubButton;
@@ -34,6 +38,7 @@ public class EsieaBoardActivity extends AppCompatActivity {
     ArrayList<EventModel> events;
     MixedAdapter clubsAdapter, eventsAdapter;
     UserModel user;
+    TextView userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +49,21 @@ public class EsieaBoardActivity extends AppCompatActivity {
         eventsRecyclerView = findViewById(R.id.events_list);
         userImageButton = findViewById(R.id.user_profile_button);
         newClubButton = findViewById(R.id.new_club_button);
+        userName = findViewById(R.id.user_name);
 
         user = (UserModel) getIntent().getSerializableExtra("user");
+        userName.setText(user.getFirstName());
 
         userImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EsieaBoardActivity.this, UserProfileActivity.class);
                 intent.putExtra("user", user);
-                startActivityForResult(intent, CLUB_PROFILE_REQUEST_CODE);
+                startActivityForResult(intent, LOG_OUT_REQUEST_CODE);
             }
         });
 
+        if(user.getRights() < 2) { newClubButton.setVisibility(GONE); }
         newClubButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,11 +82,13 @@ public class EsieaBoardActivity extends AppCompatActivity {
         displayClubs();
         displayEvents();
 
-        clubsAdapter = new MixedAdapter(EsieaBoardActivity.this, subscriptions, new ArrayList<>(), clubs, user);
+        clubsAdapter = new MixedAdapter(EsieaBoardActivity.this, subscriptions, new ArrayList<>(), new ArrayList<>(), clubs, user);
+        clubsAdapter.setClubClickListener(this);
         clubsRecyclerView.setAdapter(clubsAdapter);
         clubsRecyclerView.setLayoutManager(new LinearLayoutManager(EsieaBoardActivity.this));
 
-        eventsAdapter = new MixedAdapter(EsieaBoardActivity.this, subscriptions, events, new ArrayList<>(), user);
+        eventsAdapter = new MixedAdapter(EsieaBoardActivity.this, subscriptions, new ArrayList<>(), events, new ArrayList<>(), user);
+        eventsAdapter.setEventClickListener(this);
         eventsRecyclerView.setAdapter(eventsAdapter);
         eventsRecyclerView.setLayoutManager(new LinearLayoutManager(EsieaBoardActivity.this));
     }
@@ -115,9 +125,10 @@ public class EsieaBoardActivity extends AppCompatActivity {
         Cursor cursorSubscriptions = dataBaseHelper.readSubscriptionData();
 
         if (cursorEvents != null && cursorSubscriptions != null) {
-            while (cursorEvents.moveToNext()) {
-                while (cursorSubscriptions.moveToNext()) {
-                    if (cursorEvents.getInt(1) == cursorSubscriptions.getInt(2)) {
+            while (cursorSubscriptions.moveToNext()) {
+                while (cursorEvents.moveToNext()) {
+                    if (cursorEvents.getInt(1) == cursorSubscriptions.getInt(2)
+                            && cursorSubscriptions.getInt(1) == user.getId()) {
                         events.add(new EventModel(
                                 cursorEvents.getInt(0),
                                 cursorEvents.getInt(1),
@@ -129,7 +140,7 @@ public class EsieaBoardActivity extends AppCompatActivity {
                         ));
                     }
                 }
-                cursorSubscriptions.moveToFirst();
+                cursorEvents.moveToFirst();
             }
         }
     }
@@ -139,10 +150,37 @@ public class EsieaBoardActivity extends AppCompatActivity {
 
         if (requestCode == MANAGE_CLUBS_REQUEST_CODE && resultCode == RESULT_OK) {
             displayClubs();
-            clubsAdapter.notifyDataSetChanged();
-        } else if (requestCode == EVENT_EDIT_REQUEST && resultCode == RESULT_OK) {
             displayEvents();
             clubsAdapter.notifyDataSetChanged();
+            eventsAdapter.notifyDataSetChanged();
+        } else if (requestCode == EVENT_PAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            displayEvents();
+            displayClubs();
+            clubsAdapter.notifyDataSetChanged();
+            eventsAdapter.notifyDataSetChanged();
+        } else if (requestCode == LOG_OUT_REQUEST_CODE && resultCode == RESULT_OK) {
+            finish();
+        } else if (requestCode == CLUB_PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            displayEvents();
+            displayClubs();
+            clubsAdapter.notifyDataSetChanged();
+            eventsAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onClubClick(ClubModel club) {
+        Intent intent = new Intent(EsieaBoardActivity.this, ClubProfileActivity.class);
+        intent.putExtra("club", club);
+        intent.putExtra("user", user);
+        startActivityForResult(intent, CLUB_PROFILE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onEventClick(EventModel event) {
+        Intent intent = new Intent(EsieaBoardActivity.this, EventPageActivity.class);
+        intent.putExtra("event", event);
+        intent.putExtra("user", user);
+        startActivityForResult(intent, EVENT_PAGE_REQUEST_CODE);
     }
 }
