@@ -56,7 +56,7 @@ Here is what the `Main Board` looks like for `Jacques Dutronc`, a great and expe
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/3c0911ba-31a0-41f1-b0f2-2e9e1191e7ab)
 
-Jacques is really interested in joining the `Harp Class` offered by his favorite club, so he chooses to press on this event, and see what comes next.
+Jacques is really interested in joining the `Harp Class` offered by his favorite club, so he chooses to click on this event, and see what comes next.
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/72ddf085-8a9d-432b-848c-123dec239244)
 
@@ -65,18 +65,18 @@ Now, all that is left for Jacques to do, is to click on the `Attend` button, and
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/4162c067-7e62-4d13-a194-25b0957e74a0)
 
 Also interested in this kind of activity, Jacques only has one thing to do to be updated on this club's events in his main page, and that is to click on the `Subscribe` button.
-Now, if Jacques wants to update his profile, and change his name to look more mysterious, or change his email address because he lost the original one... no worries! He just has to navigate to his user profile, by clicking on his profile picture in the top left corner. He can then press the `Modify` button to edit his profile, or `Log Out` button to leave his account.
+Now, if Jacques wants to update his profile, and change his name to look more mysterious, or change his email address because he lost access to the original one... no worries! He just has to navigate to his user profile, by clicking on his profile picture in the top left corner. He can then press the `Modify` button to edit his profile, or `Log Out` button to leave his account.
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/bbbd3165-69fa-41fb-a4f9-dd6d64893de5)
 
 
 ### `Member` administration level : 
-This is the second user level of this application. As a club `member`, you can now edit club profiles, and organize the events. All the basic user functionalities are of course still available.
+This is the second user level of this application. As a club `member`, you can now edit club profiles, and organize events. All the basic user functionalities are of course still available.
 To access this user profile, here are the credentials : `email: hjackman@et.esiea.fr | password: password`
 
 Here is an overview of what the club `member` experience is like : 
 
-For `Hugh Jackman`, this `Main Board` is not very different to Jacques'... but, when Hugh decides view `Cinema Club`, his favorite club profile, you'll notice that he can do something more!
+For `Hugh Jackman`, this `Main Board` is not very different from Jacques'... but, when Hugh decides to view `Cinema Club`, his favorite club profile, you'll notice that he now sees a brand new button!
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/846d4ccb-ce3d-46b3-bc31-c67bb1a62700)
 
@@ -95,7 +95,7 @@ To access this user profile, here are the credentials : `email: ojoly@et.esiea.f
 
 Here is an overview of what the `admin` experience is like :
 
-Now, let's explore my own profile, which is again slightly different! As a music and cinema lover, you'll see that I am subscribed to both the Music and Cinema Club. But you can also that on top of our club list, I have a `new` button present! 
+Now, let's explore my own profile, which is again slightly different! As a music and cinema lover, you'll see that I am subscribed to both the Music and Cinema Club. But you can also notice that on top of our club list, I have a `new` button present! 
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/940a0c36-e38c-48ab-b5f4-8734a4fc665b)
 
@@ -104,12 +104,12 @@ I also have access to another button, on my `User Profile` :
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/c437fbe3-a1c5-474a-81ba-d905928656a2)
 
-Thanks to this `Manage` button, I can now also manage other user rights, and promote or downgrade other user !
+Thanks to this `Manage` button, I can now also manage other user rights, and promote or downgrade other users !
 
 ![image](https://github.com/Nihaldhara/EsieaBoard/assets/93861339/923c67dc-73af-4670-9a45-4395e868ac18)
 
 
-It is now the end of this overview! I hope my explanations are enough for you to navigate through my application, and you have a great time using it!
+It is now the end of this overview! I hope my explanations are enough for you to navigate through my application smoothly, and you have a great time using it!
 
 
 ## Database Schema
