@@ -5,10 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.ManageAdministratorsActivity" android:orientation="vertical">
+        android:orientation="vertical">
 
     <ImageButton android:layout_width="50dp" android:layout_height="50dp"
-                 android:id="@+id/back_button"
+                 android:id="@+id/back_button1"
                  android:src="@drawable/back_button"
                  android:contentDescription="@string/back_button"
                  android:layout_alignParentStart="true"

@@ -5,11 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.NewEventActivity"
         android:orientation="vertical">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Event Editor"
+              android:text="Edit User Profile"
               android:textSize="40sp"
               android:layout_margin="16dp"
               android:layout_gravity="center_horizontal"/>
@@ -19,39 +18,37 @@
           android:layout_marginBottom="16dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event name:"/>
+              android:text="Username:"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/name_input"
-              android:hint="Event name" android:minHeight="48dp"/>
+              android:hint="Username" android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event date and time:"/>
+              android:text="Email address"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/date_input"
-              android:hint="YYYY-MM-DD HH:MM:SS" android:minHeight="48dp"/>
+              android:id="@+id/email_address_input"
+              android:hint="address@et.esiea.fr" android:minHeight="48dp"/>
+
+    <TextView
+            android:text="Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:id="@+id/password_input" android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event location:"/>
-
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/location_input"
-              android:hint="Location" android:minHeight="48dp"/>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event capacity:"/>
-
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/capacity_input"
-              android:hint="Capacity" android:minHeight="48dp"/>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event description:"/>
+              android:text="Description"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/description_input"
-              android:hint="Event description" android:minHeight="48dp"/>
+              android:hint="Write something interesting about yourself!" android:minHeight="48dp"/>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 

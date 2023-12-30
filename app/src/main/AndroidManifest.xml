@@ -13,47 +13,7 @@
             android:theme="@style/Theme.EsieaBoard"
             tools:targetApi="31">
         <activity
-                android:name=".admin.NewClubActivity"
-                android:exported="false"/>
-        <activity
-                android:name=".admin.ManageUsersActivity"
-                android:exported="false"/>
-        <activity
-                android:name=".admin.ManageAdministratorsActivity"
-                android:exported="false"/>
-        <activity
-                android:name=".admin.EditEventActivity"
-                android:exported="false"
-                android:parentActivityName=".EventPageActivity"/>
-        <activity
-                android:name=".admin.EditClubActivity"
-                android:exported="false"
-                android:parentActivityName=".ClubProfileActivity"/>
-        <activity
-                android:name=".EditUserActivity"
-                android:exported="false"
-                android:parentActivityName=".UserProfileActivity"/>
-        <activity
-                android:name=".admin.NewEventActivity"
-                android:exported="false"
-                android:parentActivityName=".EventPageActivity"/>
-        <activity
-                android:name=".SignInActivity"
-                android:exported="false"/>
-        <activity
-                android:name=".EventPageActivity"
-                android:exported="false"
-                android:parentActivityName=".EsieaBoardActivity"/>
-        <activity
-                android:name=".UserProfileActivity"
-                android:exported="false"
-                android:parentActivityName=".EsieaBoardActivity"/>
-        <activity
-                android:name=".ClubProfileActivity"
-                android:exported="false"
-                android:parentActivityName=".EsieaBoardActivity"/>
-        <activity
-                android:name=".LogInActivity"
+                android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -61,9 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".EsieaBoardActivity"
-                android:exported="false"/>
     </application>
 
 </manifest>

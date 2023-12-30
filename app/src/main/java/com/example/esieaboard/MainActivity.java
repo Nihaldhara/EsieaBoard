@@ -1,14 +1,13 @@
-package com.example.esieaboard.admin;
+package com.example.esieaboard;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.esieaboard.R;
 
-public class ManageUsersActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_users);
+        setContentView(R.layout.activity_main);
     }
 }

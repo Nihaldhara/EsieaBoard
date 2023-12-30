@@ -80,7 +80,7 @@
               android:id="@+id/club_description"
               android:hint="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
               android:textColorHint="@color/black"
-              android:padding="30dp" 
+              android:padding="30dp"
               android:textAlignment="textStart"/>
 
     <View android:layout_width="match_parent" android:layout_height="1dp"

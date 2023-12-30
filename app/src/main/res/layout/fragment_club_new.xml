@@ -5,11 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.EditClubActivity"
         android:orientation="vertical">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Edit Club Profile"
+              android:text="Club Editor"
               android:textSize="40sp"
               android:layout_margin="16dp"
               android:layout_gravity="center_horizontal"/>
@@ -19,25 +18,25 @@
           android:layout_marginBottom="16dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Name:"/>
+              android:text="Club name:"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/name_input"
-              android:hint="Name" android:minHeight="48dp"/>
+              android:hint="Club name" android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Email address"/>
+              android:text="Club email address:"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/email_address_input"
-              android:hint="address@et.esiea.fr" android:minHeight="48dp"/>
+              android:hint="club@et.esiea.fr" android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Description"/>
+              android:text="Club description:"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/description_input"
-              android:hint="Write about your club activities and themes!" android:minHeight="48dp"/>
+              android:hint="Description" android:minHeight="48dp"/>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
