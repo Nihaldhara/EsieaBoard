@@ -2,7 +2,7 @@
 <androidx.fragment.app.FragmentContainerView
     xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container_view"
-        android:name="com.example.esieaboard.fragments.LogInFragment"
+        android:name="com.example.esieaboard.view.fragments.users.LogInFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     />
