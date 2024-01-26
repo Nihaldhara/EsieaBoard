@@ -15,10 +15,10 @@ public interface ClubDAO {
     @Update
     void update(Club club);
 
-    @Query("SELECT * FROM club_table")
+    @Query("SELECT * FROM clubs")
     LiveData<List<Club>> getAll();
 
-    @Query("SELECT * FROM club_table WHERE id = :id")
+    @Query("SELECT * FROM clubs WHERE id = :id")
     LiveData<Club> getById(int id);
 
     @Delete

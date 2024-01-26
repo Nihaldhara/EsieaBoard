@@ -83,6 +83,20 @@ public class ClubNewFragment extends Fragment {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(inputName.getText().toString().isEmpty()){
+                    inputName.setError("Name is required");
+                    return;
+                }
+
+                if(inputEmail.getText().toString().isEmpty()){
+                    inputEmail.setError("Email is required");
+                    return;
+                }
+
+                if(inputDescription.getText().toString().isEmpty()){
+                    inputDescription.setError("Description is required");
+                    return;
+                }
 
                 club = new Club(inputName.getText().toString(), inputEmail.getText().toString().trim(),
                         inputDescription.getText().toString());

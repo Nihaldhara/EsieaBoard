@@ -48,6 +48,8 @@ public class EsieaBoardFragment extends Fragment {
     ClubViewModel clubViewModel;
     EventViewModel eventViewModel;
 
+    User user;
+
     ClubAdapter clubAdapter;
     EventAdapter eventAdapter;
 
@@ -96,7 +98,6 @@ public class EsieaBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         clubsRecyclerView = view.findViewById(R.id.club_profiles);
         eventsRecyclerView = view.findViewById(R.id.events_list);
         userImageButton = view.findViewById(R.id.user_profile_button);
@@ -104,28 +105,58 @@ public class EsieaBoardFragment extends Fragment {
         userName = view.findViewById(R.id.user_name);
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
-
         userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-            userName.setText(user.getFirstName());
+            userName.setText(user.getFirstName() + " " + user.getLastName());
 
             if (user.getRights() < 2) {
                 newClubButton.setVisibility(GONE);
             }
-        });
 
-        userImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+            clubViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(ClubViewModel.class);
+            clubAdapter = new ClubAdapter(club -> {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container_view, ClubProfileFragment.newInstance(user, club));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            });
+
+            clubsRecyclerView.setAdapter(clubAdapter);
+            clubsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            clubViewModel.getAll().observe(getViewLifecycleOwner(), clubs -> {
+                clubAdapter.setClubs(clubs);
+            });
+
+            eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
+            eventAdapter = new EventAdapter(event -> {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+            });
+
+            eventsRecyclerView.setAdapter(eventAdapter);
+            eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            eventViewModel.getAllByUser(u.getId()).observe(getViewLifecycleOwner(), events -> {
+                eventAdapter.setEvents(events);
+            });
+
+            userImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     FragmentManager fragmentManager = getParentFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container_view, UserProfileFragment.newInstance(user));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                });
-            }
-        });
 
+                }
+            });
+        });
 
         newClubButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,43 +167,6 @@ public class EsieaBoardFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
-        });
-
-
-        clubViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(ClubViewModel.class);
-        clubAdapter = new ClubAdapter(club -> {
-            userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container_view, ClubProfileFragment.newInstance(user, club));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            });
-        });
-
-        clubsRecyclerView.setAdapter(clubAdapter);
-        clubsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        clubViewModel.getAll().observe(getViewLifecycleOwner(), clubs -> {
-            clubAdapter.setClubs(clubs);
-        });
-
-        eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
-        eventAdapter = new EventAdapter(event -> {
-            userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            });
-        });
-
-        eventsRecyclerView.setAdapter(eventAdapter);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        eventViewModel.getAllByUser(u.getId()).observe(getViewLifecycleOwner(), events -> {
-            eventAdapter.setEvents(events);
         });
     }
 }

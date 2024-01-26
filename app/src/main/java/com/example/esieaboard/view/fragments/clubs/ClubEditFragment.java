@@ -80,26 +80,29 @@ public class ClubEditFragment extends Fragment {
         descriptionInput = view.findViewById(R.id.description_input);
 
         clubViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(ClubViewModel.class);
-
         clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
             nameInput.setText(club.getName());
             emailInput.setText(club.getEmail());
             descriptionInput.setText(club.getDescription());
 
-        });
+            confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(nameInput.getText().toString().trim().isEmpty()){
+                        nameInput.setError("Name is required");
+                        return;
+                    }
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                fragmentManager.popBackStack();
-            }
-        });
+                    if(emailInput.getText().toString().trim().isEmpty()){
+                        emailInput.setError("Email is required");
+                        return;
+                    }
 
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
+                    if(descriptionInput.getText().toString().trim().isEmpty()){
+                        descriptionInput.setError("Description is required");
+                        return;
+                    }
+
                     club.setName(nameInput.getText().toString().trim());
                     club.setEmail(emailInput.getText().toString().trim());
                     club.setDescription(descriptionInput.getText().toString().trim());
@@ -111,7 +114,15 @@ public class ClubEditFragment extends Fragment {
 
                     FragmentManager fragmentManager = getParentFragmentManager();
                     fragmentManager.popBackStack();
-                });
+                }
+            });
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack();
             }
         });
     }

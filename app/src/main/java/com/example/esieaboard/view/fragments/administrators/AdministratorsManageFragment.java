@@ -81,7 +81,11 @@ public class AdministratorsManageFragment extends Fragment {
         recyclerView = view.findViewById(R.id.users_list);
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
-        userAdapter = new UserAdapter();
+        userAdapter = new UserAdapter(userViewModel);
+        userViewModel.getAll().observe(getViewLifecycleOwner(), users -> {
+            userAdapter.setUsers(users);
+        });
+
         recyclerView.setAdapter(userAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -47,7 +47,7 @@ public class EventPageFragment extends Fragment {
     EventViewModel eventViewModel;
     UserViewModel userViewModel;
 
-    ArrayList<Attendance> attendances;
+    User user;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_USER = "user";
@@ -110,9 +110,8 @@ public class EventPageFragment extends Fragment {
         eventAttendees = view.findViewById(R.id.event_attendees);
 
         attendanceViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AttendanceViewModel.class);
-        eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
-        userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
 
+        eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
         eventViewModel.get(e.getId()).observe(getViewLifecycleOwner(), event -> {
             eventName.setText(event.getName());
             eventLocation.setText(event.getLocation());
@@ -120,60 +119,60 @@ public class EventPageFragment extends Fragment {
             eventDescription.setText(event.getDescription());
             eventCapacity.setText(String.valueOf(event.getCapacity()));
 
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container_view, EventEditFragment.newInstance(event));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
 
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    confirmDialog(event);
+                }
+            });
         });
 
-        attendances = new ArrayList<>();
+        userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
+        userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+            this.user = user;
+        });
+
+
 
         attendanceViewModel.getAllByEvent(e.getId()).observe(getViewLifecycleOwner(), attendances -> {
             int result = attendances.size();
 
             eventAttendees.setText(String.valueOf(result));
-            if(result >= e.getCapacity()) {
+            if (result >= e.getCapacity()) {
                 attendButton.setVisibility(GONE);
             }
         });
 
         attendanceViewModel.get(u.getId(), e.getId()).observe(getViewLifecycleOwner(), attendance -> {
-            if(attendance != null) {
+            if (attendance != null) {
                 attendButton.setVisibility(GONE);
                 cancelButton.setVisibility(VISIBLE);
-            }
-            else {
+            } else {
                 attendButton.setVisibility(VISIBLE);
                 cancelButton.setVisibility(GONE);
             }
         });
 
-        userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-            if(user.getRights() < 1) { editButton.setVisibility(GONE); }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmDialog();
-            }
-        });
+        if (user.getRights() < 1) {
+            editButton.setVisibility(GONE);
+        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 fragmentManager.popBackStackImmediate();
-            }
-        });
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventViewModel.get(e.getId()).observe(getViewLifecycleOwner(), event -> {
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container_view, EventEditFragment.newInstance(event));
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                });
             }
         });
 
@@ -189,34 +188,30 @@ public class EventPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 attendanceViewModel.unattend(u.getId(), e.getId());
-                attendButton.setVisibility(VISIBLE);
-                cancelButton.setVisibility(GONE);
             }
         });
     }
 
-    void confirmDialog() {
-        eventViewModel.get(e.getId()).observe(getViewLifecycleOwner(), event -> {
-            if(event != null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Delete " + event.getName() + " ?");
-                builder.setMessage("Do you really want to delete " + event.getName() + " ?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        eventViewModel.delete(event);
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.popBackStackImmediate();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+    void confirmDialog(Event event) {
+        if (event != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("Delete " + event.getName() + " ?");
+            builder.setMessage("Do you really want to delete " + event.getName() + " ?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    eventViewModel.delete(event);
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.popBackStackImmediate();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                });
-                builder.create().show();}
-        });
-
+                }
+            });
+            builder.create().show();
+        }
     }
 }

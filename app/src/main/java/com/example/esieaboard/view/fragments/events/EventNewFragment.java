@@ -93,6 +93,69 @@ public class EventNewFragment extends Fragment {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (inputName.getText().toString().isEmpty()) {
+                    inputName.setError("Name is required");
+                    return;
+                }
+
+                if (inputDate.getText().toString().isEmpty()) {
+                    inputDate.setError("Date is required");
+                    return;
+                } else {
+                    String[] date = inputDate.getText().toString().split("-");
+                    if (date.length != 3) {
+                        inputDate.setError("Date format is invalid");
+                        return;
+                    } else {
+                        try {
+                            int year = Integer.parseInt(date[0]);
+                            int month = Integer.parseInt(date[1]);
+                            int day = Integer.parseInt(date[2]);
+                            if (day < 1 || day > 31) {
+                                inputDate.setError("Day is invalid");
+                                return;
+                            }
+                            if (month < 1 || month > 12) {
+                                inputDate.setError("Month is invalid");
+                                return;
+                            }
+                            if (year < 2024) {
+                                inputDate.setError("Year is invalid");
+                                return;
+                            }
+                        } catch (Exception e) {
+                            inputDate.setError("Date format is invalid");
+                            return;
+                        }
+                    }
+                }
+
+                if (inputLocation.getText().toString().isEmpty()) {
+                    inputLocation.setError("Location is required");
+                    return;
+                }
+
+                if (inputCapacity.getText().toString().isEmpty()) {
+                    inputCapacity.setError("Capacity is required");
+                    return;
+                } else {
+                    try {
+                        int capacity = Integer.parseInt(inputCapacity.getText().toString());
+                        if (capacity < 1) {
+                            inputCapacity.setError("Capacity must be greater than 0");
+                            return;
+                        }
+                    } catch (Exception e) {
+                        inputCapacity.setError("Capacity must be a number");
+                        return;
+                    }
+                }
+
+                if (inputDescription.getText().toString().isEmpty()) {
+                    inputDescription.setError("Description is required");
+                    return;
+                }
+
                 event = new Event(clubId, inputName.getText().toString(),
                         inputDescription.getText().toString(), inputDate.getText().toString(),
                         inputLocation.getText().toString(), Integer.parseInt(inputCapacity.getText().toString()));

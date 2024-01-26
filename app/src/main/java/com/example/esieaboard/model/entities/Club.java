@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "club_table")
+@Entity(tableName = "clubs")
 public class Club implements Serializable {
 
     @PrimaryKey(autoGenerate = true) private int id;

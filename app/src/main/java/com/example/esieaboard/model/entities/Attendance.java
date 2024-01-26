@@ -2,9 +2,18 @@ package com.example.esieaboard.model.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "attendance_table")
+@Entity(tableName = "attendance",
+    foreignKeys = {@ForeignKey(entity = User.class,
+                parentColumns = "id",
+                childColumns = "userId",
+                onDelete = androidx.room.ForeignKey.CASCADE),
+                @ForeignKey(entity = Event.class,
+                parentColumns = "id",
+                childColumns = "eventId",
+                onDelete = androidx.room.ForeignKey.CASCADE)})
 public class Attendance {
     @PrimaryKey(autoGenerate = true) private int id;
     @ColumnInfo(name = "userId") private int userId;

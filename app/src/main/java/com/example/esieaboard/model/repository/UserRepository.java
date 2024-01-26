@@ -55,6 +55,11 @@ public class UserRepository {
         return allUsers;
     }
 
+    public void updateUserRights(User user, int rights) {
+        user.setRights(rights);
+        executor.execute(() -> userDAO.update(user));
+    }
+
     public void shutDownExecutor() {
         executor.shutdown();
     }

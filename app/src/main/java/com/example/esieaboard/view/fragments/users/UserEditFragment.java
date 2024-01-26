@@ -85,6 +85,41 @@ public class UserEditFragment extends Fragment {
             emailInput.setText(user.getEmailAddress());
             passwordInput.setText(user.getPassword());
             descriptionInput.setText(user.getDescription());
+
+            confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if(emailInput.getText().toString().isEmpty()) {
+                            emailInput.setError("Email address is required");
+                            return;
+                        }
+
+                        if(passwordInput.getText().toString().isEmpty()) {
+                            passwordInput.setError("Password is required");
+                            return;
+                        }
+
+                        user.setFirstName(nameInput.getText().toString().trim());
+                        user.setEmailAddress(emailInput.getText().toString().trim());
+                        user.setPassword(passwordInput.getText().toString().trim());
+                        user.setDescription(descriptionInput.getText().toString().trim());
+                        userViewModel.update(user);
+
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("user", user);
+
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.popBackStack();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        nameInput.setText(user.getFirstName());
+                        emailInput.setText(user.getEmailAddress());
+                        passwordInput.setText(user.getPassword());
+                        descriptionInput.setText(user.getDescription());
+                    }
+                }
+            });
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -92,25 +127,6 @@ public class UserEditFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 fragmentManager.popBackStack();
-            }
-        });
-
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-                    user.setFirstName(nameInput.getText().toString().trim());
-                    user.setEmailAddress(emailInput.getText().toString().trim());
-                    user.setPassword(passwordInput.getText().toString().trim());
-                    user.setDescription(descriptionInput.getText().toString().trim());
-                    userViewModel.update(user);
-
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("user", user);
-
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.popBackStack();
-                });
             }
         });
     }

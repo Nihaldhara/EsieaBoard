@@ -16,16 +16,16 @@ public interface EventDAO {
     @Update
     void update(Event event);
 
-    @Query("SELECT * FROM event_table")
+    @Query("SELECT * FROM events")
     LiveData<List<Event>> getAll();
 
-    @Query("SELECT * FROM event_table WHERE clubId = :clubId")
+    @Query("SELECT * FROM events WHERE clubId = :clubId ORDER BY date ASC")
     LiveData<List<Event>> getAllByClub(int clubId);
 
-    @Query("SELECT * FROM event_table INNER JOIN subscription_table ON event_table.clubId = subscription_table.clubId WHERE subscription_table.userId = :userId GROUP BY event_table.id")
+    @Query("SELECT * FROM events INNER JOIN subscriptions ON events.clubId = subscriptions.clubId WHERE subscriptions.userId = :userId GROUP BY events.id")
     LiveData<List<Event>> getAllByUser(int userId);
 
-    @Query("SELECT * FROM event_table WHERE id = :id")
+    @Query("SELECT * FROM events WHERE id = :id")
     LiveData<Event> get(int id);
 
     @Delete

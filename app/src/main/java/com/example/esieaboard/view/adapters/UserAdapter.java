@@ -1,16 +1,19 @@
 package com.example.esieaboard.view.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.esieaboard.R;
 import com.example.esieaboard.database.db.AppDatabase;
 import com.example.esieaboard.model.entities.User;
+import com.example.esieaboard.viewmodel.UserViewModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,14 +22,17 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
+    UserViewModel userViewModel;
+
     private final List<User> users = new ArrayList<>();
 
-    public UserAdapter() {
+    public UserAdapter(UserViewModel userViewModel) {
+        this.userViewModel = userViewModel;
     }
 
     public void setUsers(List<User> users) {
         UserDiffCallback diffCallback = new UserDiffCallback(this.users, users);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new UserDiffCallback(this.users, users));
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.users.clear();
         this.users.addAll(users);
         diffResult.dispatchUpdatesTo(this);
@@ -43,7 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull UserAdapter.UserViewHolder holder, int position) {
         User user = users.get(position);
-        holder.bind(user);
+        holder.bind(user, userViewModel);
     }
 
     @Override
@@ -55,7 +61,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         TextView userName;
         Button adminButton, memberButton, userButton;
-        AppDatabase database;
 
         public UserViewHolder(View itemView) {
             super(itemView);
@@ -63,36 +68,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             adminButton = itemView.findViewById(R.id.button_admin);
             memberButton = itemView.findViewById(R.id.button_member);
             userButton = itemView.findViewById(R.id.button_user);
-
-            database = AppDatabase.getInstance(itemView.getContext());
         }
 
-        public void bind(User user) {
+        public void bind(User user, UserViewModel userViewModel) {
             userName.setText(user.getFirstName());
 
-            adminButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user.setRights(2);
-                    database.userDAO().update(user);
-                }
-            });
+            if (user.getRights() == 2) {
+                adminButton.setVisibility(View.GONE);
+                memberButton.setVisibility(View.VISIBLE);
+                userButton.setVisibility(View.VISIBLE);
+            } else if (user.getRights() == 1) {
+                adminButton.setVisibility(View.VISIBLE);
+                memberButton.setVisibility(View.GONE);
+                userButton.setVisibility(View.VISIBLE);
+            } else {
+                adminButton.setVisibility(View.VISIBLE);
+                memberButton.setVisibility(View.VISIBLE);
+                userButton.setVisibility(View.GONE);
+            }
 
-            memberButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user.setRights(1);
-                    database.userDAO().update(user);
-                }
-            });
-
-            userButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    user.setRights(0);
-                    database.userDAO().update(user);
-                }
-            });
+            adminButton.setOnClickListener(view -> userViewModel.updateUserRights(user, 2));
+            memberButton.setOnClickListener(view -> userViewModel.updateUserRights(user, 1));
+            userButton.setOnClickListener(view -> userViewModel.updateUserRights(user, 0));
         }
     }
 

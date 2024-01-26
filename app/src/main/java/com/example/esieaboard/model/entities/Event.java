@@ -2,12 +2,17 @@ package com.example.esieaboard.model.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "event_table")
+@Entity(tableName = "events",
+    foreignKeys = @ForeignKey(entity = Club.class,
+                parentColumns = "id",
+                childColumns = "clubId",
+                onDelete = ForeignKey.CASCADE))
 public class Event implements Serializable {
     @PrimaryKey(autoGenerate = true) private int id;
     @ColumnInfo(name = "clubId") private int clubId;

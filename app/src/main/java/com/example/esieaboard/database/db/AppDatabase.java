@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.example.esieaboard.database.dao.*;
 import com.example.esieaboard.model.entities.*;
 
-@Database(entities = {Attendance.class, Club.class, Event.class, Subscription.class, User.class}, version = 8)
+@Database(entities = {Attendance.class, Club.class, Event.class, Subscription.class, User.class}, version = 9)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract AttendanceDAO attendanceDAO();
 

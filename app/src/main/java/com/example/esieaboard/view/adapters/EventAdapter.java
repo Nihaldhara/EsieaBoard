@@ -32,7 +32,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     public void setEvents(List<Event> events) {
         EventDiffCallback diffCallback = new EventDiffCallback(this.events, events);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new EventDiffCallback(this.events, events));
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.events.clear();
         this.events.addAll(events);
         diffResult.dispatchUpdatesTo(this);

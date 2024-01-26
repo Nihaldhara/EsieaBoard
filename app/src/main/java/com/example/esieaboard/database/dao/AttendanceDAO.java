@@ -14,16 +14,16 @@ public interface AttendanceDAO {
     @Update
     void update(Attendance attendance);
 
-    @Query("SELECT * FROM attendance_table")
+    @Query("SELECT * FROM attendance")
     LiveData<List<Attendance>> getAll();
 
-    @Query("DELETE FROM attendance_table WHERE userId = :userId AND eventId = :eventId")
+    @Query("DELETE FROM attendance WHERE userId = :userId AND eventId = :eventId")
     void unattend(int userId, int eventId);
 
-    @Query("SELECT * FROM attendance_table WHERE userId = :userId AND eventId = :eventId")
+    @Query("SELECT * FROM attendance WHERE userId = :userId AND eventId = :eventId")
     LiveData<Attendance> get(int userId, int eventId);
 
-    @Query("SELECT * FROM attendance_table WHERE eventId = :eventId")
+    @Query("SELECT * FROM attendance WHERE eventId = :eventId")
     LiveData<List<Attendance>> getAllByEvent(int eventId);
 
     @Delete

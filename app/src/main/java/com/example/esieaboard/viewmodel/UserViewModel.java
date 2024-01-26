@@ -45,4 +45,8 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<List<User>> getAll() {
         return allUsers;
     }
+
+    public void updateUserRights(User user, int rights) {
+        userRepository.updateUserRights(user, rights);
+    }
 }

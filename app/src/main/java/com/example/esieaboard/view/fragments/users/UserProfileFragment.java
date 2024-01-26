@@ -93,20 +93,31 @@ public class UserProfileFragment extends Fragment {
             emailText.setText(user.getEmailAddress());
             descriptionText.setText(user.getDescription());
 
-            if(user.getRights() < 2) { manageRightsButton.setVisibility(GONE); }
-        });
+            if (user.getRights() < 2) {
+                manageRightsButton.setVisibility(GONE);
+            }
 
-        manageRightsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+            manageRightsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     FragmentManager fragmentManager = getParentFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container_view, AdministratorsManageFragment.newInstance(user));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
-                });
-            }
+                }
+            });
+
+            modifyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container_view, UserEditFragment.newInstance(user));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
         });
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -128,17 +139,6 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        modifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container_view, UserEditFragment.newInstance(user));
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                });
-            }
-        });
+
     }
 }

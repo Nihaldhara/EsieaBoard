@@ -15,19 +15,19 @@ public interface SubscriptionDAO {
     @Update
     void update(Subscription subscription);
 
-    @Query("SELECT * FROM subscription_table WHERE id = :id AND clubId = :clubId")
+    @Query("SELECT * FROM subscriptions WHERE id = :id AND clubId = :clubId")
     LiveData<Subscription> getById(int id, int clubId);
 
-    @Query("SELECT * FROM subscription_table")
+    @Query("SELECT * FROM subscriptions")
     LiveData<List<Subscription>> getAll();
 
-    @Query("SELECT * FROM subscription_table WHERE userId = :userId AND clubId = :clubId")
+    @Query("SELECT * FROM subscriptions WHERE userId = :userId AND clubId = :clubId")
     LiveData<Subscription> getByUserId(int userId, int clubId);
 
-    @Query("SELECT * FROM subscription_table WHERE userId = :userId")
+    @Query("SELECT * FROM subscriptions WHERE userId = :userId")
     LiveData<List<Subscription>> getAllByUser(int userId);
 
-    @Query("DELETE FROM subscription_table WHERE userId = :userId AND clubId = :clubId")
+    @Query("DELETE FROM subscriptions WHERE userId = :userId AND clubId = :clubId")
     void unsubscribeUser(int userId, int clubId);
 
     @Delete

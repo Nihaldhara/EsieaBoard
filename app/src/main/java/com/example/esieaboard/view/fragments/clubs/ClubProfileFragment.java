@@ -117,16 +117,6 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
         recyclerView = view.findViewById(R.id.recycler_view);
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
-        eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
-        clubViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(ClubViewModel.class);
-        subscriptionViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(SubscriptionViewModel.class);
-
-        clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
-            clubName.setText(club.getName());
-            clubEmailAddress.setText(club.getEmail());
-            clubDescription.setText(club.getDescription());
-        });
-
         userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
             if (user.getRights() < 1) {
                 newButton.setVisibility(GONE);
@@ -137,24 +127,64 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
             if (user.getRights() < 2) {
                 deleteButton.setVisibility(GONE);
             }
-        });
 
-        eventAdapter = new EventAdapter(event -> {
-            userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+            eventAdapter = new EventAdapter(event -> {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             });
+
+            recyclerView.setAdapter(eventAdapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            eventViewModel.getAllByClub(c.getId()).observe(getViewLifecycleOwner(), events -> {
+                eventAdapter.setEvents(events);
+            });
         });
 
-        recyclerView.setAdapter(eventAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
 
-        eventViewModel.getAllByClub(c.getId()).observe(getViewLifecycleOwner(), events -> {
-            eventAdapter.setEvents(events);
+        clubViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(ClubViewModel.class);
+        clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
+            clubName.setText(club.getName());
+            clubEmailAddress.setText(club.getEmail());
+            clubDescription.setText(club.getDescription());
+
+            newButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container_view, EventNewFragment.newInstance(club.getId()));
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    });
+                }
+            });
+
+            modifyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container_view, ClubEditFragment.newInstance(club));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    confirmDialog(club);
+                }
+            });
         });
+
+        subscriptionViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(SubscriptionViewModel.class);
 
         subscriptionViewModel.getByUserId(u.getId(), c.getId()).observe(getViewLifecycleOwner(), subscription -> {
             if (subscription != null) {
@@ -166,46 +196,11 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
             }
         });
 
-        newButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
-                    userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container_view, EventNewFragment.newInstance(club.getId()));
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    });
-                });
-            }
-        });
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 fragmentManager.popBackStack();
-            }
-        });
-
-        modifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container_view, ClubEditFragment.newInstance(club));
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                });
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmDialog();
             }
         });
 
@@ -234,29 +229,26 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         });
-
     }
 
-    void confirmDialog() {
-        clubViewModel.get(c.getId()).observe(getViewLifecycleOwner(), club -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("Delete " + club.getName() + " ?");
-            builder.setMessage("Do you really want to delete " + club.getName() + " ?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    clubViewModel.delete(club);
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.popBackStackImmediate();
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            builder.create().show();
+    void confirmDialog(Club club) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Delete " + club.getName() + " ?");
+        builder.setMessage("Do you really want to delete " + club.getName() + " ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                clubViewModel.delete(club);
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStackImmediate();
+            }
         });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

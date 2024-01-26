@@ -15,21 +15,21 @@ public interface UserDAO {
     @Update
     void update(User user);
 
-    @Query("SELECT * FROM user_table WHERE emailAddress = :email AND password = :password")
+    @Query("SELECT * FROM users WHERE emailAddress = :email AND password = :password")
     LiveData<User> get(String email, String password);
 
-    @Query("SELECT * FROM user_table WHERE emailAddress = :email")
+    @Query("SELECT * FROM users WHERE emailAddress = :email")
     LiveData<User> get(String email);
 
-    @Query("SELECT * FROM user_table WHERE id = :id")
+    @Query("SELECT * FROM users WHERE id = :id")
     LiveData<User> get(int id);
 
-    @Query("SELECT * FROM user_table")
+    @Query("SELECT * FROM users")
     LiveData<List<User>> getAll();
 
     @Delete
     void delete(User user);
 
-    @Query("DELETE FROM user_table")
+    @Query("DELETE FROM users")
     void deleteAll();
 }

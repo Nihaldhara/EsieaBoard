@@ -32,7 +32,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
 
     public void setClubs(List<Club> clubs) {
         ClubDiffCallback diffCallback = new ClubDiffCallback(this.clubs, clubs);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ClubDiffCallback(this.clubs, clubs));
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.clubs.clear();
         this.clubs.addAll(clubs);
         diffResult.dispatchUpdatesTo(this);
