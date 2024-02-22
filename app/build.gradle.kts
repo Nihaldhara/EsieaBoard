@@ -37,22 +37,28 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //JUnit
+    testImplementation("junit:junit:4.13.2")
+
+    //Mockito
+    testImplementation("org.mockito:mockito-core:3.12.4")
+
+    //Robolectric
+    testImplementation("org.robolectric:robolectric:4.11.1")
+
     // Fragment
     implementation ("androidx.fragment:fragment:1.6.2")
 
     // ViewModel
-    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.7.0")
 
     // LiveData
-    implementation ("androidx.lifecycle:lifecycle-livedata:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata:2.7.0")
 
     // Room components
     implementation ("androidx.room:room-runtime:2.6.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.1")
 
-    // Optional - Kotlin Extensions and Coroutines support for Room
-    implementation ("androidx.room:room-ktx:2.6.1")
-
     // Optional - Reactive Streams support for LiveData
-    implementation ("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.7.0")
 }

@@ -40,7 +40,7 @@ import static android.view.View.VISIBLE;
  * Use the {@link ClubProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClubProfileFragment extends Fragment implements EventAdapter.EventClickListener {
+public class ClubProfileFragment extends Fragment {
 
     ImageButton backButton;
     Button modifyButton, newButton, deleteButton, subscribeButton, unsubscribeButton;
@@ -120,8 +120,6 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
         userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
             if (user.getRights() < 1) {
                 newButton.setVisibility(GONE);
-            }
-            if (user.getRights() < 1) {
                 modifyButton.setVisibility(GONE);
             }
             if (user.getRights() < 2) {
@@ -217,17 +215,6 @@ public class ClubProfileFragment extends Fragment implements EventAdapter.EventC
             public void onClick(View view) {
                 subscriptionViewModel.unsubscribeUser(u.getId(), c.getId());
             }
-        });
-    }
-
-    @Override
-    public void onEventClick(Event event) {
-        userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-            FragmentManager fragmentManager = getParentFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
         });
     }
 

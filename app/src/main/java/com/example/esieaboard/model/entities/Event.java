@@ -9,18 +9,25 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 
 @Entity(tableName = "events",
-    foreignKeys = @ForeignKey(entity = Club.class,
+        foreignKeys = @ForeignKey(entity = Club.class,
                 parentColumns = "id",
                 childColumns = "clubId",
                 onDelete = ForeignKey.CASCADE))
 public class Event implements Serializable {
-    @PrimaryKey(autoGenerate = true) private int id;
-    @ColumnInfo(name = "clubId") private int clubId;
-    @ColumnInfo(name = "name") private String name;
-    @ColumnInfo(name = "description") private String description;
-    @ColumnInfo(name = "date") private String date;
-    @ColumnInfo(name = "location") private String location;
-    @ColumnInfo(name = "capacity") private int capacity;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @ColumnInfo(name = "clubId")
+    private int clubId;
+    @ColumnInfo(name = "name")
+    private String name;
+    @ColumnInfo(name = "description")
+    private String description;
+    @ColumnInfo(name = "date")
+    private String date;
+    @ColumnInfo(name = "location")
+    private String location;
+    @ColumnInfo(name = "capacity")
+    private int capacity;
 
     public Event(int clubId, String name, String description, String date, String location, int capacity) {
         this.clubId = clubId;

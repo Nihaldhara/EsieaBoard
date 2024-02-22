@@ -1,6 +1,7 @@
 package com.example.esieaboard.view.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.esieaboard.*;
 import com.example.esieaboard.model.entities.Club;
+import com.example.esieaboard.model.entities.Event;
 import com.example.esieaboard.model.entities.User;
 import com.example.esieaboard.view.adapters.ClubAdapter;
 import com.example.esieaboard.view.adapters.EventAdapter;
@@ -48,7 +50,6 @@ public class EsieaBoardFragment extends Fragment {
     ClubViewModel clubViewModel;
     EventViewModel eventViewModel;
 
-    User user;
 
     ClubAdapter clubAdapter;
     EventAdapter eventAdapter;
@@ -98,6 +99,7 @@ public class EsieaBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         clubsRecyclerView = view.findViewById(R.id.club_profiles);
         eventsRecyclerView = view.findViewById(R.id.events_list);
         userImageButton = view.findViewById(R.id.user_profile_button);
@@ -105,6 +107,25 @@ public class EsieaBoardFragment extends Fragment {
         userName = view.findViewById(R.id.user_name);
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
+        userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
+            eventAdapter = new EventAdapter(event -> {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            });
+
+            eventsRecyclerView.setAdapter(eventAdapter);
+            eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
+            eventViewModel.getAllByUser(u.getId()).observe(getViewLifecycleOwner(), events -> {
+                eventAdapter.setEvents(events);
+            });
+
+        });
+
         userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
             userName.setText(user.getFirstName() + " " + user.getLastName());
 
@@ -128,22 +149,6 @@ public class EsieaBoardFragment extends Fragment {
                 clubAdapter.setClubs(clubs);
             });
 
-            eventViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(EventViewModel.class);
-            eventAdapter = new EventAdapter(event -> {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container_view, EventPageFragment.newInstance(user, event));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-
-            });
-
-            eventsRecyclerView.setAdapter(eventAdapter);
-            eventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-            eventViewModel.getAllByUser(u.getId()).observe(getViewLifecycleOwner(), events -> {
-                eventAdapter.setEvents(events);
-            });
 
             userImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override

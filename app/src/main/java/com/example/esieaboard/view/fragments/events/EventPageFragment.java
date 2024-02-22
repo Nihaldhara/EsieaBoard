@@ -47,8 +47,6 @@ public class EventPageFragment extends Fragment {
     EventViewModel eventViewModel;
     UserViewModel userViewModel;
 
-    User user;
-
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_USER = "user";
     private static final String ARG_EVENT = "event";
@@ -140,10 +138,10 @@ public class EventPageFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(UserViewModel.class);
         userViewModel.get(u.getId()).observe(getViewLifecycleOwner(), user -> {
-            this.user = user;
+            if (user.getRights() < 1) {
+                editButton.setVisibility(GONE);
+            }
         });
-
-
 
         attendanceViewModel.getAllByEvent(e.getId()).observe(getViewLifecycleOwner(), attendances -> {
             int result = attendances.size();
@@ -163,10 +161,6 @@ public class EventPageFragment extends Fragment {
                 cancelButton.setVisibility(GONE);
             }
         });
-
-        if (user.getRights() < 1) {
-            editButton.setVisibility(GONE);
-        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -69,7 +69,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
             super(itemView);
             clubImage = itemView.findViewById(R.id.logo_button);
             clubName = itemView.findViewById(R.id.club_name);
-            clubsLayout = itemView.findViewById(R.id.clubs_Layout);
+            clubsLayout = itemView.findViewById(R.id.clubs_layout);
         }
 
         public void bind(Club club, ClubClickListener listener) {

@@ -22,7 +22,7 @@ public interface EventDAO {
     @Query("SELECT * FROM events WHERE clubId = :clubId ORDER BY date ASC")
     LiveData<List<Event>> getAllByClub(int clubId);
 
-    @Query("SELECT * FROM events INNER JOIN subscriptions ON events.clubId = subscriptions.clubId WHERE subscriptions.userId = :userId GROUP BY events.id")
+    @Query("SELECT events.* FROM events JOIN subscriptions ON events.clubId = subscriptions.clubId WHERE subscriptions.userId = :userId")
     LiveData<List<Event>> getAllByUser(int userId);
 
     @Query("SELECT * FROM events WHERE id = :id")

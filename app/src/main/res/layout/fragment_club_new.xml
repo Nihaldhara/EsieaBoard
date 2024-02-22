@@ -7,49 +7,69 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Club Editor"
-              android:textSize="40sp"
-              android:layout_margin="16dp"
-              android:layout_gravity="center_horizontal"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#C4C3C3">
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"
-          android:layout_marginBottom="16dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="Club Editor"
+                  android:textColor="@color/black"
+                  android:textSize="40sp"
+                  android:layout_margin="16dp"
+                  android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Club name:"/>
+              android:text="Club name:"
+              android:textColor="@color/black"
+              android:layout_marginTop="16dp"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/name_input"
-              android:hint="Club name" android:minHeight="48dp"/>
+              android:hint="Club name"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Club email address:"/>
+              android:text="Club email address:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/email_address_input"
-              android:hint="club@et.esiea.fr" android:minHeight="48dp"/>
+              android:hint="club@et.esiea.fr"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Club description:"/>
+              android:text="Club description:"
+                android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/description_input"
-              android:hint="Description" android:minHeight="48dp"/>
+              android:hint="Description"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_cancel"
                 android:text="Cancel"
-                android:layout_margin="16dp"/>
+                android:textColor="@color/black"
+                android:layout_margin="16dp"
+                android:backgroundTint="#7BC9EB"/>
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_confirm"
                 android:layout_alignParentEnd="true"
                 android:text="Confirm"
-                android:layout_margin="16dp"/>
+                android:textColor="@color/black"
+                android:layout_margin="16dp"
+                android:backgroundTint="#2DAAE1"/>
 
     </RelativeLayout>
 

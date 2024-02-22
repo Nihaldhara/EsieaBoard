@@ -5,63 +5,88 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#D9D9D9">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Edit User Profile"
-              android:textSize="40sp"
-              android:layout_margin="16dp"
-              android:layout_gravity="center_horizontal"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#C4C3C3">
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"
-          android:layout_marginBottom="16dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="Edit User Profile"
+                  android:textColor="@color/black"
+                  android:textSize="40sp"
+                  android:layout_margin="16dp"
+                  android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Username:"/>
+              android:text="Username:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/name_input"
-              android:hint="Username" android:minHeight="48dp"/>
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:hint="Username"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Email address"/>
+              android:text="Email address"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/email_address_input"
-              android:hint="address@et.esiea.fr" android:minHeight="48dp"/>
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:hint="address@et.esiea.fr"
+              android:minHeight="48dp"/>
 
     <TextView
             android:text="Password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
 
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Password"
-            android:id="@+id/password_input" android:minHeight="48dp"/>
+            android:textColor="@color/black"
+            android:textColorHint="#646262"
+            android:id="@+id/password_input"
+            android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Description"/>
+              android:text="Description"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/description_input"
-              android:hint="Write something interesting about yourself!" android:minHeight="48dp"/>
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:hint="Write something interesting about yourself!"
+              android:minHeight="48dp"/>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_cancel"
                 android:text="Cancel"
+                android:textColor="@color/black"
+                android:backgroundTint="#7BC9EB"
                 android:layout_margin="16dp"/>
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_confirm"
                 android:layout_alignParentEnd="true"
                 android:text="Confirm"
-                android:layout_margin="16dp"/>
+                android:textColor="@color/black"
+                android:backgroundTint="#2DAAE1"
+                android:layout_marginTop="16dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"/>
 
     </RelativeLayout>
 

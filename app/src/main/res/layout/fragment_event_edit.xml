@@ -5,65 +5,93 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#D9D9D9">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="Event Editor"
-              android:textSize="40sp"
-              android:layout_margin="16dp"
-              android:layout_gravity="center_horizontal"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#C4C3C3">
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"
-          android:layout_marginBottom="16dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="Event Editor"
+                  android:textColor="@color/black"
+                  android:textSize="40sp"
+                  android:layout_margin="16dp"
+                  android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event name:"/>
+              android:text="Event name:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/name_input"
-              android:hint="Event name" android:minHeight="48dp"/>
+              android:hint="Event name"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event date and time:"/>
+              android:text="Event date and time:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/date_input"
-              android:hint="YYYY-MM-DD HH:MM:SS" android:minHeight="48dp"/>
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:hint="YYYY-MM-DD HH:MM:SS"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event location:"/>
+              android:text="Event location:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/location_input"
-              android:hint="Location" android:minHeight="48dp"/>
+              android:hint="Location"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event capacity:"/>
+              android:text="Event capacity:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/capacity_input"
-              android:hint="Capacity" android:minHeight="48dp"/>
+              android:hint="Capacity"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:text="Event description:"/>
+              android:text="Event description:"
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/description_input"
-              android:hint="Event description" android:minHeight="48dp"/>
+              android:hint="Event description"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
+              android:minHeight="48dp"/>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_cancel"
                 android:text="Cancel"
-                android:layout_margin="16dp"/>
+                android:textColor="@color/black"
+                android:layout_margin="16dp"
+                android:backgroundTint="#7BC9EB"/>
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_confirm"
                 android:layout_alignParentEnd="true"
                 android:text="Confirm"
-                android:layout_margin="16dp"/>
+                android:textColor="@color/black"
+                android:layout_margin="16dp"
+                android:backgroundTint="#2DAAE1"/>
 
     </RelativeLayout>
 

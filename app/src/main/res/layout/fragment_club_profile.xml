@@ -3,10 +3,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:gravity="center_horizontal">
+              android:gravity="center_horizontal"
+              android:background="#D9D9D9">
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="#C4C3C3">
 
         <ImageButton android:layout_width="50dp" android:layout_height="50dp"
                      android:id="@+id/back_button"
@@ -15,21 +17,19 @@
                      android:layout_alignParentStart="true"
                      android:layout_margin="16dp"
                      android:scaleType="centerCrop"
-                     android:padding="0dp"/>
+                     android:padding="0dp"
+                     android:background="#C4C3C3"/>
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/modify_button"
-                android:hint="@string/modify"
-                android:backgroundTint="@color/white"
-                android:textColorHint="#757575"
+                android:text="@string/modify"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp"
+                android:backgroundTint="#C4C3C3"/>
 
     </RelativeLayout>
-
-    <View android:layout_width="match_parent" android:layout_height="2dp"
-          android:background="@color/black"/>
 
     <ImageView android:layout_width="192dp" android:layout_height="173dp"
                android:id="@+id/logo_image"
@@ -38,68 +38,71 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_name"
-              android:hint="@string/club_name"
-              android:textColorHint="@color/black"
+              android:text="@string/club_name"
+              android:textColor="@color/black"
               android:textAlignment="center"
               android:textSize="34sp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_email_address"
-              android:hint="@string/email_address_et_esiea_fr"
-              android:textColorHint="@color/black"
+              android:text="@string/email_address_et_esiea_fr"
+              android:textColor="#646262"
               android:textSize="20sp"
               android:textAlignment="center"
               android:paddingBottom="16dp"/>
 
     <Button
             android:text="Delete Club Profile"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#7BC9EB"
             android:id="@+id/delete_button"/>
 
     <Button
             android:text="Subscribe"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:id="@+id/subscribe_button"
+            android:backgroundTint="#2DAAE1"
             android:visibility="visible"/>
 
     <Button
             android:text="Unsubscribe"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:id="@+id/unsubscribe_button"
+            android:backgroundTint="#7BC9EB"
             android:visibility="gone"/>
 
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/club_description"
+                  android:text="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
+                  android:textColor="@color/black"
+                  android:padding="30dp"
+                  android:textAlignment="textStart"/>
 
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:id="@+id/club_description"
-              android:hint="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
-              android:textColorHint="@color/black"
-              android:padding="30dp"
-              android:textAlignment="textStart"/>
-
-    <View android:layout_width="match_parent" android:layout_height="1dp"
-          android:background="@color/black"/>
-
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="#C4C3C3">
 
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:hint="@string/events"
+                  android:text="@string/events"
                   android:padding="16dp"
-                  android:textColorHint="@color/black"
+                  android:textColor="@color/black"
                   android:textSize="20sp"/>
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/button_new"
+                android:backgroundTint="#7BC9EB"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
-                android:text="@string/new_event"/>
+                android:text="@string/new_event"
+                android:textColor="@color/black"/>
 
     </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.example.esieaboard.view.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,17 +75,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userName.setText(user.getFirstName());
 
             if (user.getRights() == 2) {
-                adminButton.setVisibility(View.GONE);
-                memberButton.setVisibility(View.VISIBLE);
-                userButton.setVisibility(View.VISIBLE);
+                adminButton.setBackgroundColor(Color.parseColor("#2DAAE1"));
+                memberButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
+                userButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
             } else if (user.getRights() == 1) {
-                adminButton.setVisibility(View.VISIBLE);
-                memberButton.setVisibility(View.GONE);
-                userButton.setVisibility(View.VISIBLE);
+                adminButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
+                memberButton.setBackgroundColor(Color.parseColor("#2DAAE1"));
+                userButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
             } else {
-                adminButton.setVisibility(View.VISIBLE);
-                memberButton.setVisibility(View.VISIBLE);
-                userButton.setVisibility(View.GONE);
+                adminButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
+                memberButton.setBackgroundColor(Color.parseColor("#7BC9EB"));
+                userButton.setBackgroundColor(Color.parseColor("#2DAAE1"));
             }
 
             adminButton.setOnClickListener(view -> userViewModel.updateUserRights(user, 2));

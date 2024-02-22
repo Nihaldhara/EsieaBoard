@@ -3,19 +3,22 @@
               xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:gravity="center">
+              android:gravity="center"
+              android:background="#D9D9D9">
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/log_in_text"
-              android:hint="@string/sign_in"
+              android:text="@string/sign_in"
               android:textAlignment="center"
               android:textSize="96sp"
               android:layout_margin="12dp"
-              android:textColorHint="@color/black"/>
+              android:textColor="@color/black"/>
 
     <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/email_address_input"
               android:hint="@string/email_address"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
               android:inputType="textEmailAddress"
               android:autofillHints="emailAddress"
               android:textSize="24sp"/>
@@ -23,21 +26,25 @@
     <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/password_input"
               android:hint="@string/password"
+              android:textColor="@color/black"
+              android:textColorHint="#646262"
               android:inputType="textPassword"
               android:autofillHints="password"
               android:textSize="24sp"/>
 
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/confirm_button"
-            android:hint="@string/confirm"
+            android:text="@string/confirm"
+            android:backgroundTint="#2DAAE1"
             android:textSize="34sp"
-            android:layout_margin="12dp"/>
+            android:layout_margin="12dp"
+            android:textColor="@color/black"/>
 
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/log_in_button"
-            android:hint="@string/log_in_button"
-            android:backgroundTint="#FFFFFF"
+            android:text="@string/log_in_button"
+            android:backgroundTint="#7BC9EB"
             android:textSize="16sp"
-            android:textColorHint="#757575"/>
+            android:textColor="@color/black"/>
 
 </LinearLayout>

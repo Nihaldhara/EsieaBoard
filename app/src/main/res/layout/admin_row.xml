@@ -9,10 +9,12 @@
             android:layout_height="wrap_content">
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#D9D9D9">
 
             <TextView
                     android:text="Username"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/user_name"
@@ -26,6 +28,7 @@
                         android:text="Admin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#7BC9EB"
                         android:id="@+id/button_admin"
                         android:padding="0dp"
                         android:layout_margin="10dp"/>
@@ -34,6 +37,7 @@
                         android:text="Member"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#7BC9EB"
                         android:id="@+id/button_member"
                         android:padding="0dp"
                         android:layout_marginTop="10dp"
@@ -43,6 +47,7 @@
                         android:text="User"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#7BC9EB"
                         android:id="@+id/button_user"
                         android:padding="0dp"
                         android:layout_margin="10dp"/>
