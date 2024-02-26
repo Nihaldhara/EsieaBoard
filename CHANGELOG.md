@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-dev+014] - 2024-02-26
+
+### Fixed
+ - `fragment_club_new.xml` background is now the right color
+ - Data displaying delay is no longer visible, with default fields now empty
+
 ## [1.0.0-dev+013] - 2024-02-22
 
 ### Changed
@@ -19,28 +25,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
  - Foreign keys were reestablished in the database
- - User can no longer enter invalid data in EditText fields
- - AdministratorsManageFragment now displays the correct data
- - UserAdapter buttons are now fully functional
+ - User can no longer enter invalid data in `EditText` fields
+ - `AdministratorsManageFragment` now displays the correct data
+ - `UserAdapter` buttons are now fully functional
 
 ## [1.0.0-dev+011] - 2024-01-21
 
 ### Changed
- - Project now follows MVVM architecture : 
-     - Models handle data
-     - Views display data
-     - ViewModels handle logic and communication between models and views
- - Project now uses LiveData and DataBinding to display data in views
- - Project now uses Room to handle database access
- - MixedAdapter was broken down into three separate adapters, one for events, one for clubs and one for users
+ - Project now follows `MVVM architecture` : 
+     - `Models` handle data
+     - `Views` display data
+     - `ViewModels` handle logic and communication between models and views
+ - Project now uses `LiveData` and `DataBinding` to display data in views
+ - Project now uses `Room` to handle database access
+ - `MixedAdapter` was broken down into three separate adapters, one for events, one for clubs and one for users
 
 ### Added
- - ViewModels, Repositories and DAOs for every model
- - AppDatabase class to handle database creation and access
+ - `ViewModels`, `Repositories` and `DAO`s for every model
+ - `AppDatabase` class to handle database creation and access
 
 ### Removed
- - DataBaseHelper class
- - MixedAdapter class
+ - `DataBaseHelper` class
+ - `MixedAdapter` class
 
 ## [1.0.0-dev+010] - 2023-12-30
 

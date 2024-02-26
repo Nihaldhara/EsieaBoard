@@ -38,14 +38,14 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_name"
-              android:text="@string/club_name"
+              android:text=""
               android:textColor="@color/black"
               android:textAlignment="center"
               android:textSize="34sp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/club_email_address"
-              android:text="@string/email_address_et_esiea_fr"
+              android:text=""
               android:textColor="#646262"
               android:textSize="20sp"
               android:textAlignment="center"
@@ -81,7 +81,7 @@
 
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:id="@+id/club_description"
-                  android:text="A rather long description about the club, what they do, little bit of sweet talking to draw people in if you know you know"
+                  android:text=""
                   android:textColor="@color/black"
                   android:padding="30dp"
                   android:textAlignment="textStart"/>

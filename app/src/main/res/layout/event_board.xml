@@ -28,7 +28,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/event_date" app:layout_constraintHorizontal_bias="0.1"/>
 
             <TextView
-                    android:text="Event name:"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                    android:text="Event date"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:textSize="15sp"
@@ -47,7 +47,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                    android:text="Event location"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
-                    android:text="Event capacity"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text=" seats"
+                      android:text=" "
                       android:textColor="@color/black"
                       app:layout_constraintEnd_toEndOf="parent"
                       android:id="@+id/textView2"

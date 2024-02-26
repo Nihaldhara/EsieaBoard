@@ -34,20 +34,20 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/event_name"
-              android:text="@string/event_name"
+              android:text=""
               android:textColor="@color/black"
               android:textSize="60sp"
               android:padding="16dp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/event_date"
-              android:text="@string/event_date"
+              android:text=""
               android:textColor="@color/black"
               android:textSize="34sp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/event_location"
-              android:text="Location"
+              android:text=""
               android:textColor="#646262"
               android:textSize="20sp"/>
 
@@ -65,7 +65,7 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/event_description"
-              android:text="Detailed description of the event, little teaser to again draw people in"
+              android:text=""
               android:textSize="20sp"
               android:textColor="@color/black"
               android:padding="30dp"/>
@@ -76,7 +76,7 @@
                   android:layout_margin="10dp">
 
         <TextView
-                android:text="Attendees"
+                android:text=""
                 android:textColor="#646262"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:text="Capacity"
+                android:text=""
                 android:textColor="#646262"
                 android:layout_gravity="end"
                 android:id="@+id/event_capacity"/>

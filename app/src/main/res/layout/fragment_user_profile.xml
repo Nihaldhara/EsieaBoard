@@ -48,13 +48,13 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/user_name"
-              android:text="@string/username"
+              android:text=""
               android:textColor="@color/black"
               android:textSize="34sp" android:textAlignment="center"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:id="@+id/user_email_address"
-              android:text="@string/email_address_et_esiea_fr"
+              android:text=""
               android:textColor="@color/black"
               android:textSize="20sp"
               android:textAlignment="center"/>
@@ -73,7 +73,7 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
               android:id="@+id/user_description"
-              android:text="Write something interesting about yourself!"
+              android:text=""
               android:textColor="@color/black"
               android:padding="30dp" android:textAlignment="textStart"/>
 
