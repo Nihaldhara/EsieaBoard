@@ -1,13 +1,10 @@
-package com.example.esieaboard.database.db;
+package com.example.esieaboard.model.local;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import com.example.esieaboard.database.dao.*;
 import com.example.esieaboard.model.entities.*;
 
 @Database(entities = {Attendance.class, Club.class, Event.class, Subscription.class, User.class}, version = 9)

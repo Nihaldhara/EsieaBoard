@@ -1,13 +1,12 @@
-package com.example.esieaboard.model.repository;
+package com.example.esieaboard.model.repositories;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.example.esieaboard.database.dao.UserDAO;
-import com.example.esieaboard.database.db.AppDatabase;
+import com.example.esieaboard.model.local.UserDAO;
+import com.example.esieaboard.model.local.AppDatabase;
 import com.example.esieaboard.model.entities.User;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

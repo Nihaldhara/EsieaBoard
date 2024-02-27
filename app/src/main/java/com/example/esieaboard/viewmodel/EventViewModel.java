@@ -4,9 +4,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.example.esieaboard.model.entities.Event;
-import com.example.esieaboard.model.entities.Subscription;
-import com.example.esieaboard.model.repository.EventRepository;
-import com.example.esieaboard.model.repository.SubscriptionRepository;
+import com.example.esieaboard.model.repositories.EventRepository;
+import com.example.esieaboard.model.repositories.SubscriptionRepository;
 
 import java.util.List;
 

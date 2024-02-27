@@ -1,9 +1,9 @@
-package com.example.esieaboard.model.repository;
+package com.example.esieaboard.model.repositories;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
-import com.example.esieaboard.database.dao.ClubDAO;
-import com.example.esieaboard.database.db.AppDatabase;
+import com.example.esieaboard.model.local.ClubDAO;
+import com.example.esieaboard.model.local.AppDatabase;
 import com.example.esieaboard.model.entities.Club;
 
 import java.util.List;

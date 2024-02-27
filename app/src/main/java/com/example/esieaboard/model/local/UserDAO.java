@@ -1,4 +1,4 @@
-package com.example.esieaboard.database.dao;
+package com.example.esieaboard.model.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;

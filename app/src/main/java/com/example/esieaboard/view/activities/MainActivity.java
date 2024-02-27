@@ -3,7 +3,7 @@ package com.example.esieaboard.view.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.esieaboard.R;
-import com.example.esieaboard.database.db.AppDatabase;
+import com.example.esieaboard.model.local.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private AppDatabase database;

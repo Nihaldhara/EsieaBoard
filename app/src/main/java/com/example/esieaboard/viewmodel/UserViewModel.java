@@ -4,7 +4,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.example.esieaboard.model.entities.User;
-import com.example.esieaboard.model.repository.UserRepository;
+import com.example.esieaboard.model.repositories.UserRepository;
 
 import java.util.List;
 
